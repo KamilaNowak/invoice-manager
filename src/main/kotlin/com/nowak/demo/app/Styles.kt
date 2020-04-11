@@ -13,8 +13,9 @@ class Styles : Stylesheet() {
     init {
         label and heading {
             padding = box(15.px)
-            fontSize = 20.px
+            fontSize = 40.px
             fontWeight = FontWeight.BOLD
+
         }
         vbox{
             padding=box(12.px)

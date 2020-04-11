@@ -1,6 +1,7 @@
 package com.example.demo.app
 
 import com.nowak.demo.view.LoginView
+import javafx.scene.image.Image
 import javafx.stage.Stage
 import tornadofx.*
 
@@ -11,6 +12,8 @@ class InvoicerManagerApp: App(LoginView::class, Styles::class){
             height=800.0
             isResizable=true
         }
+        stage.icons.add(Image("static/invoice-logo.jpg"))
+        stage.title="Invoicer Manager"
         super.start(stage)
     }
     init {

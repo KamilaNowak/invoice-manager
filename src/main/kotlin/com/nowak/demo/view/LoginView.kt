@@ -1,28 +1,44 @@
 package com.nowak.demo.view
 
 import com.example.demo.app.Styles
+import com.nowak.demo.controllers.LoginController
+import com.nowak.demo.database.InvoicerDatabase
+
+import com.nowak.demo.models.login.User
 import com.nowak.demo.models.login.UserModel
 import  de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon.USER
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView
+import javafx.geometry.Pos
+import javafx.scene.Parent
 import javafx.scene.input.KeyCode
+
 import tornadofx.*
+import java.time.LocalDate
+import javax.inject.Inject
 
 
-class LoginView : View("Login") {
+class LoginView : View("") {
 
-    val userModel = UserModel()
+    var userModel = UserModel()
+    val loginController: LoginController by inject()
+
+    init {}
 
     override val root = borderpane {
-        top = label(" Invoicer Manager") {
-            addClass(Styles.heading)
+        top {
+            label(" Invoicer Manager") {
+                alignment = Pos.TOP_CENTER
+                this.id = "logo-label"
+                this.stylesheets.add("styles.css")
+            }
         }
-
         center = form {
             addClass(Styles.heading)
             label {
                 text = "Login"
+                alignment=Pos.CENTER
             }
-            fieldset("", FontAwesomeIconView(USER)) {
+            fieldset() {
                 field("Username") {
                     textfield(userModel.username) {
                         promptText = "Username"
@@ -52,40 +68,56 @@ class LoginView : View("Login") {
                             }
                         }
                         setOnKeyPressed {
-                            if (it.code == KeyCode.ENTER) {
-                                userModel.commit() {
-                                    userModel.rollback()
-                                }
-                            }
+                          action{
+                              if (loginController.login(userModel.username.value!!,
+                                              userModel.password.value!!)) {
+                                  userModel.rollback()
+                                  replaceWith(WorkspaceView::class,
+                                          ViewTransition.Slide(0.5.seconds,
+                                                  ViewTransition.Direction.LEFT))
+                              } else {
+                                  error("Invalid username or password")
+                              }
+                          }
                         }
                     }
                 }
-
             }
             vbox {
                 addClass(Styles.vbox)
                 button {
                     text = "Login"
+                    this.id = "login-button"
+                    this.stylesheets.add("styles.css")
                     enableWhen(userModel.valid)
                     action {
-                        userModel.commit() {
-
+                        if (loginController.login(userModel.username.value!!,
+                                        userModel.password.value!!)) {
                             userModel.rollback()
+                            replaceWith(WorkspaceView::class,
+                                    ViewTransition.Slide(0.5.seconds,
+                                            ViewTransition.Direction.LEFT))
+                        } else {
+                            error("Invalid username or password")
                         }
                     }
                 }
 
                 button("Register") {
+                    this.id ="login-button"
+                    this.stylesheets.add("styles.css")
                     action {
                         replaceWith(RegisterView::class,
                                 ViewTransition.Slide(0.5.seconds,
                                         ViewTransition.Direction.LEFT))
+                        userModel.rollback()
                     }
-
                 }.apply {
 
                 }
             }
         }
     }
+
 }
+

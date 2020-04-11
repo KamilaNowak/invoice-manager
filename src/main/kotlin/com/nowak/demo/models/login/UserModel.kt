@@ -3,7 +3,7 @@ package com.nowak.demo.models.login
 import com.nowak.demo.models.login.User
 import tornadofx.*
 
-class UserModel : ItemViewModel<User>(){
+class UserModel() : ItemViewModel<User>(){
     val id = bind{
         item?.idProperty
     }
@@ -19,4 +19,5 @@ class UserModel : ItemViewModel<User>(){
     val email = bind{
         item?.emailProperty
     }
+
 }
