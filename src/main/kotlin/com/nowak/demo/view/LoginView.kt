@@ -17,26 +17,32 @@ import java.time.LocalDate
 import javax.inject.Inject
 
 
-class LoginView : View("") {
+class LoginView : View() {
 
     var userModel = UserModel()
     val loginController: LoginController by inject()
 
-    init {}
+    init {
+    }
 
     override val root = borderpane {
+        this.id = "scene-bg"
+        this.stylesheets.add("styles.css")
+
         top {
             label(" Invoicer Manager") {
                 alignment = Pos.TOP_CENTER
-                this.id = "logo-label"
-                this.stylesheets.add("styles.css")
+                style {
+                    id = "logo-label"
+                    stylesheets.add("styles.css")
+                }
             }
         }
         center = form {
             addClass(Styles.heading)
             label {
                 text = "Login"
-                alignment=Pos.CENTER
+                alignment = Pos.CENTER
             }
             fieldset() {
                 field("Username") {
@@ -53,6 +59,10 @@ class LoginView : View("") {
                                 -> null
                             }
                         }
+                        style {
+                            id = "text-field"
+                            stylesheets.add("styles.css")
+                        }
                     }
                 }
                 field("Password") {
@@ -67,18 +77,24 @@ class LoginView : View("") {
                                 -> null
                             }
                         }
+                        style {
+                            id = "text-field"
+                            stylesheets.add("styles.css")
+                        }
+
                         setOnKeyPressed {
-                          action{
-                              if (loginController.login(userModel.username.value!!,
-                                              userModel.password.value!!)) {
-                                  userModel.rollback()
-                                  replaceWith(WorkspaceView::class,
-                                          ViewTransition.Slide(0.5.seconds,
-                                                  ViewTransition.Direction.LEFT))
-                              } else {
-                                  error("Invalid username or password")
-                              }
-                          }
+                            action {
+                                if (loginController.login(userModel.username.value!!,
+                                                userModel.password.value!!)) {
+                                    loggedUser = loginController.getLoggedUser(userModel.username.value)
+                                    userModel.rollback()
+                                    replaceWith(WorkspaceView::class,
+                                            ViewTransition.Slide(0.5.seconds,
+                                                    ViewTransition.Direction.LEFT))
+                                } else {
+                                    error("Invalid username or password")
+                                }
+                            }
                         }
                     }
                 }
@@ -87,24 +103,28 @@ class LoginView : View("") {
                 addClass(Styles.vbox)
                 button {
                     text = "Login"
-                    this.id = "login-button"
-                    this.stylesheets.add("styles.css")
+                    style {
+                        id = "login-button"
+                        stylesheets.add("styles.css")
+                    }
                     enableWhen(userModel.valid)
                     action {
                         if (loginController.login(userModel.username.value!!,
                                         userModel.password.value!!)) {
-                            userModel.rollback()
-                            replaceWith(WorkspaceView::class,
-                                    ViewTransition.Slide(0.5.seconds,
-                                            ViewTransition.Direction.LEFT))
-                        } else {
+                                loggedUser = loginController.getLoggedUser(userModel.username.value)
+                                userModel.rollback()
+                                replaceWith(WorkspaceView::class,
+                                        ViewTransition.Slide(0.5.seconds,
+                                                ViewTransition.Direction.LEFT))
+
+                            } else {
                             error("Invalid username or password")
                         }
                     }
                 }
 
                 button("Register") {
-                    this.id ="login-button"
+                    this.id = "login-button"
                     this.stylesheets.add("styles.css")
                     action {
                         replaceWith(RegisterView::class,

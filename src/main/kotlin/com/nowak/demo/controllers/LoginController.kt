@@ -13,5 +13,9 @@ class LoginController : Controller(){
         return invoiceDatabase
                 .checkIfAccountExists(username, password)
     }
-
+    fun getLoggedUser(username: String): Long{
+        val user = invoiceDatabase
+                .findUserByUsername(username)
+        return user.id
+    }
 }

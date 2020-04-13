@@ -10,7 +10,7 @@ class RegisterController : Controller() {
     val invoiceDatabase = InvoicerDatabase()
 
     fun register(username: String, password: String, email: String, birthDate: LocalDate): Boolean {
-        if (!invoiceDatabase.checkUsernameEmailAvailability(username, email)) {
+        if (!invoiceDatabase.checkUsernameEmailAvailability(username = username, email = email)) {
             invoiceDatabase.insertNewUser(username, password, email, birthDate)
             return true
         } else {

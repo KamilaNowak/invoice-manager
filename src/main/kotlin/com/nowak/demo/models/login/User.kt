@@ -2,12 +2,11 @@ package com.nowak.demo.models.login
 
 import javafx.beans.property.SimpleLongProperty
 import javafx.beans.property.SimpleObjectProperty
-import javafx.beans.property.SimpleSetProperty
 import javafx.beans.property.SimpleStringProperty
 import java.time.LocalDate
 import tornadofx.*;
 
-class User (id:Long, username: String, password:String, email: String,birthDate:LocalDate){
+class User(id: Long, username: String, password: String, email: String, birthDate: LocalDate, var createdAt: LocalDate){
 
     val idProperty = SimpleLongProperty(id)
     var id by idProperty

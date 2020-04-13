@@ -1,50 +1,205 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1beba19-492e-4df0-8bce-e71a862c743f" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_dagger_dagger_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_zaxxer_HikariCP_2_2_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_inject_javax_inject_1.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_javassist_javassist_3_18_1_GA.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_postgresql_postgresql_42_2_11.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_5.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/invoicer_manager_script.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/controllers/LoginController.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/controllers/RegisterController.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/database/Utilities.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/view/DashboradView.kt" afterDir="false" />
+    <list default="true" id="d1beba19-492e-4df0-8bce-e71a862c743f" name="Default" comment="add views and further app logic">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mindrot_jbcrypt_0_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/controllers/UserController.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/models/addresses/AddressDetails.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/models/addresses/AddressDetailsModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/models/customers/Company.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/models/customers/CompanyModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/models/customers/Customer.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/models/customers/OnwerModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/models/customers/Owner.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/models/invoices/CompanyInvoice.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/models/invoices/PaymentOption.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/models/invoices/PersonalInvoice.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/models/items/Item.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/view/AccountView.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/view/EditUsername.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/view/StatisticsView.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/controllers/UserController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/addresses/AddressDetails.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/addresses/AddressDetailsModel$$special$$inlined$bind$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/addresses/AddressDetailsModel$$special$$inlined$bind$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/addresses/AddressDetailsModel$$special$$inlined$bind$3.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/addresses/AddressDetailsModel$$special$$inlined$bind$4.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/addresses/AddressDetailsModel$$special$$inlined$bind$5.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/addresses/AddressDetailsModel$building$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/addresses/AddressDetailsModel$city$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/addresses/AddressDetailsModel$country$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/addresses/AddressDetailsModel$id$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/addresses/AddressDetailsModel$street$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/addresses/AddressDetailsModel.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/Company.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/CompanyModel$$special$$inlined$bind$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/CompanyModel$$special$$inlined$bind$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/CompanyModel$$special$$inlined$bind$3.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/CompanyModel$$special$$inlined$bind$4.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/CompanyModel$$special$$inlined$bind$5.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/CompanyModel$address$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/CompanyModel$companyName$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/CompanyModel$id$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/CompanyModel$nip$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/CompanyModel$owner$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/CompanyModel.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/Customer.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/Owner.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/OwnerModel$$special$$inlined$bind$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/OwnerModel$$special$$inlined$bind$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/OwnerModel$$special$$inlined$bind$3.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/OwnerModel$$special$$inlined$bind$4.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/OwnerModel$$special$$inlined$bind$5.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/OwnerModel$email$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/OwnerModel$id$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/OwnerModel$name$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/OwnerModel$pid$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/OwnerModel$surname$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/customers/OwnerModel.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/invoices/CompanyInvoice.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/invoices/PaymentMethod.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/invoices/PersonalInvoice.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/items/Item.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$$special$$inlined$inject$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$2$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$2$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$3$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$3.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$1$1$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$1$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$1$2$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$1$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$1$3$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$1$3$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$1$3.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$2$1$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$2$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$2$2$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$2$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$2$3$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$2$3$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$2$3.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$3$1$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$3$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$3$2$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$3$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$3$3$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$3$3.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$3.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$4$1$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$4$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$4$2$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$4$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$4.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$5$1$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$5$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$5$2$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$5$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$5.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$6.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$7$1$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$7$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$7$2$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$7$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4$7.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1$4.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView$root$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/AccountView.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/EditUsername$$special$$inlined$inject$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/EditUsername$root$1$$special$$inlined$bind$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/EditUsername$root$1$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/EditUsername$root$1$2$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/EditUsername$root$1$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/EditUsername$root$1$3$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/EditUsername$root$1$3.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/EditUsername$root$1$4$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/EditUsername$root$1$4$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/EditUsername$root$1$4.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/EditUsername$root$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/EditUsername.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$1$1$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2$1$1$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2$2$1$3$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2$2$1$3.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$3$1$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$1$1$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$1$1$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$2$1$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$3$1$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$4$1$3.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$6$1$3.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$6$2$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/StatisticsView$root$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/StatisticsView.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/WorkspaceView$1$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/WorkspaceView$2$1.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/WorkspaceView$2$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/WorkspaceView$2.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/WorkspaceViewKt.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/bef9065b-3db3-4785-b255-fdadb542f9c8.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/bef9065b-3db3-4785-b255-fdadb542f9c8/storage_v2/_src_/database/invoicer.5SLyJQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/bef9065b-3db3-4785-b255-fdadb542f9c8/storage_v2/_src_/database/invoicer.5SLyJQ/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/bef9065b-3db3-4785-b255-fdadb542f9c8/storage_v2/_src_/database/invoicer.5SLyJQ/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/bef9065b-3db3-4785-b255-fdadb542f9c8/storage_v2/_src_/database/invoicer.5SLyJQ/schema/public.abK9xQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_zaxxer_HikariCP_2_2_5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_javassist_javassist_3_18_1_GA.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_5.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/invoicer-manager.iml" beforeDir="false" afterPath="$PROJECT_DIR$/invoicer-manager.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/invoicer_manager_script.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/invoicer_manager_script.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/app/InvoicerManagerApp.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/app/InvoicerManagerApp.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/app/Styles.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/app/Styles.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/models/login/UserModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/models/login/UserModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/controllers/LoginController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/controllers/LoginController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/controllers/RegisterController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/controllers/RegisterController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/database/InvoicerDatabase.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/database/InvoicerDatabase.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/database/Utilities.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/database/Utilities.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/models/login/User.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/models/login/User.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/view/DashboradView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/view/DashboradView.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/view/LoginView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/view/LoginView.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/view/RegisterView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/view/RegisterView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/view/WorkspaceView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/view/WorkspaceView.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/META-INF/invoicer-manager.kotlin_module" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/META-INF/invoicer-manager.kotlin_module" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/app/InvoicerManagerApp.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/app/InvoicerManagerApp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/app/Styles$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/app/Styles$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/app/Styles$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/app/Styles$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/app/Styles$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/app/Styles$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/example/demo/app/Styles.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/example/demo/app/Styles.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/login/UserModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/login/UserModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/controllers/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/controllers/LoginController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/database/InvoicerDatabase.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/database/InvoicerDatabase.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/database/UtilitiesKt.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/database/UtilitiesKt.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/login/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/models/login/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/DashboradView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/DashboradView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$1$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2$1$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2$1$1$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2$1$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2$2$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2$2$1$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2$2$1$2$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2$2$1$2$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2$2$1$2$1.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2$2$1$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2$2$1$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2$2$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2$2$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$3$1$1$1.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$3$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$3$1$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$3$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$3$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$3$2$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/LoginView$root$1$2$3$2$1.class" afterDir="false" />
@@ -64,7 +219,7 @@
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$3$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$3$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$4$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$4$1$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$4$1$2$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$4$1$2$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$4$1$2$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$4$1$3$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$4$1$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$4$1$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$4$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$4$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1$3$1$4.class" afterDir="false" />
@@ -81,6 +236,9 @@
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView$root$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterView.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterViewKt.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/RegisterViewKt.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/WorkspaceView$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/WorkspaceView$1$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/WorkspaceView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/WorkspaceView$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/WorkspaceView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nowak/demo/view/WorkspaceView.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -95,21 +253,24 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Interface" />
+        <option value="Kotlin Enum" />
         <option value="Kotlin Class" />
         <option value="Kotlin File" />
+        <option value="TornadoFX Code View" />
       </list>
     </option>
   </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>demo</find>
-    </findStrings>
-    <dirStrings>
-      <dir>C:\Users\es\Projects\tornadofx-idea-plugin\template-projects\tornadofx-maven-project</dir>
-    </dirStrings>
-  </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="KamilaNowak &lt;knowak242@gmail.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/kotlin/com/nowak/demo/database/Utilities.kt" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/src/invoicer_manager_script.sql" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="1aBDAXy6edARe5B90fEWjHnZNO9" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -141,20 +302,23 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
-      <recent name="com.nowak.demo.models.login" />
-      <recent name="no.tornado.app" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\Kamila\IdeaProjects\invoicer-manager\src\main\resources\static" />
       <recent name="C:\Users\Kamila\IdeaProjects\invoicer-manager\src\main\resources" />
     </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.nowak.demo.models.login" />
+      <recent name="no.tornado.app" />
+    </key>
+    <key name="CreateKotlinClassDialog.RecentsKey">
+      <recent name="com.nowak.demo.models.customers" />
+      <recent name="com.nowak.demo.models.creators" />
+    </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="TornadoFX.InvoicerManagerApp">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
@@ -223,6 +387,21 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="AccountView" type="TORNADOFX_RUNCONFIGURATION" factoryName="TornadoFX Configuration Factory" temporary="true" run-type="View" live-views="false" live-stylesheets="false" dump-stylesheets="false">
+      <option name="MAIN_CLASS_NAME" value="tornadofx.App" />
+      <module name="invoicer-manager" />
+      <option name="VIEW_CLASS_NAME" value="com.nowak.demo.view.AccountView" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="InvoicerManagerApp" type="TORNADOFX_RUNCONFIGURATION" factoryName="TornadoFX Configuration Factory" temporary="true" run-type="App" live-views="false" live-stylesheets="false" dump-stylesheets="false">
+      <option name="MAIN_CLASS_NAME" value="com.example.demo.app.InvoicerManagerApp" />
+      <module name="invoicer-manager" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="MyApp" type="TORNADOFX_RUNCONFIGURATION" factoryName="TornadoFX Configuration Factory" run-type="App" live-views="true" live-stylesheets="false" dump-stylesheets="false">
       <option name="MAIN_CLASS_NAME" value="com.example.demo.app.InvoicerManagerApp" />
       <module name="invoicer-manager" />
@@ -255,6 +434,12 @@
       <envs />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="TornadoFX.InvoicerManagerApp" />
+        <item itemvalue="TornadoFX.AccountView" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration>$USER_HOME$/.subversion</configuration>
@@ -297,12 +482,28 @@
       <workItem from="1517468649479" duration="15000" />
       <workItem from="1586199954484" duration="1131000" />
       <workItem from="1586429550596" duration="14832000" />
-      <workItem from="1586517530329" duration="37745000" />
+      <workItem from="1586517530329" duration="43420000" />
+      <workItem from="1586676386097" duration="11749000" />
+      <workItem from="1586706487554" duration="4555000" />
+      <workItem from="1586712075616" duration="5206000" />
+      <workItem from="1586775001242" duration="10364000" />
+      <workItem from="1586791182671" duration="15221000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -312,59 +513,88 @@
       <collection />
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="LAST_COMMIT_MESSAGE" value="" />
+  </component>
   <component name="WindowStateProjectService">
-    <state x="214" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586546188386">
+    <state x="214" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586709824653">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="214" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586546188386" />
-    <state x="552" y="133" key="#com.intellij.ide.util.MemberChooser" timestamp="1586612837027">
+    <state x="214" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1586709824653" />
+    <state x="552" y="133" key="#com.intellij.ide.util.MemberChooser" timestamp="1586796100386">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="552" y="133" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586612837027" />
-    <state x="548" y="0" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog" timestamp="1586437507776">
+    <state x="552" y="133" key="#com.intellij.ide.util.MemberChooser/0.0.1536.834@0.0.1536.834" timestamp="1586796100386" />
+    <state x="548" y="0" width="441" height="496" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog" timestamp="1586803929145">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="548" y="0" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586437507776" />
-    <state width="1492" height="13" key="GridCell.Tab.0.bottom" timestamp="1586632641432">
+    <state x="548" y="0" width="441" height="496" key="#org.jetbrains.kotlin.idea.refactoring.move.moveDeclarations.ui.MoveKotlinTopLevelDeclarationsDialog/0.0.1536.834@0.0.1536.834" timestamp="1586803929145" />
+    <state x="330" y="0" key="CommitChangelistDialog2" timestamp="1586806791344">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1492" height="13" key="GridCell.Tab.0.bottom/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586632641432" />
-    <state width="1492" height="87" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1586463106215" />
-    <state width="1492" height="13" key="GridCell.Tab.0.center" timestamp="1586632641432">
+    <state x="330" y="0" key="CommitChangelistDialog2/0.0.1536.834@0.0.1536.834" timestamp="1586806791344" />
+    <state width="1492" height="201" key="GridCell.Tab.0.bottom" timestamp="1586806525372">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1492" height="13" key="GridCell.Tab.0.center/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586632641432" />
-    <state width="1492" height="87" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1586463106214" />
-    <state width="1492" height="13" key="GridCell.Tab.0.left" timestamp="1586632641432">
+    <state width="746" height="442" key="GridCell.Tab.0.bottom/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586696482577" />
+    <state width="1492" height="201" key="GridCell.Tab.0.bottom/0.0.1536.834@0.0.1536.834" timestamp="1586806525372" />
+    <state width="1492" height="201" key="GridCell.Tab.0.center" timestamp="1586806525372">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1492" height="13" key="GridCell.Tab.0.left/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586632641432" />
-    <state width="1492" height="87" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1586463106214" />
-    <state width="1492" height="13" key="GridCell.Tab.0.right" timestamp="1586632641432">
+    <state width="746" height="442" key="GridCell.Tab.0.center/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586696482577" />
+    <state width="1492" height="201" key="GridCell.Tab.0.center/0.0.1536.834@0.0.1536.834" timestamp="1586806525372" />
+    <state width="1492" height="201" key="GridCell.Tab.0.left" timestamp="1586806525372">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1492" height="13" key="GridCell.Tab.0.right/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586632641432" />
-    <state width="1492" height="87" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1586463106215" />
-    <state width="1492" height="255" key="GridCell.Tab.1.bottom" timestamp="1586609077238">
+    <state width="746" height="442" key="GridCell.Tab.0.left/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586696482577" />
+    <state width="1492" height="201" key="GridCell.Tab.0.left/0.0.1536.834@0.0.1536.834" timestamp="1586806525372" />
+    <state width="1492" height="201" key="GridCell.Tab.0.right" timestamp="1586806525372">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1492" height="255" key="GridCell.Tab.1.bottom/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586609077238" />
-    <state width="1492" height="255" key="GridCell.Tab.1.center" timestamp="1586609077238">
+    <state width="746" height="442" key="GridCell.Tab.0.right/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586696482577" />
+    <state width="1492" height="201" key="GridCell.Tab.0.right/0.0.1536.834@0.0.1536.834" timestamp="1586806525372" />
+    <state width="746" height="255" key="GridCell.Tab.1.bottom" timestamp="1586695455285">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1492" height="255" key="GridCell.Tab.1.center/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586609077238" />
-    <state width="1492" height="255" key="GridCell.Tab.1.left" timestamp="1586609077238">
+    <state width="746" height="255" key="GridCell.Tab.1.bottom/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586695455285" />
+    <state width="746" height="255" key="GridCell.Tab.1.center" timestamp="1586695455285">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1492" height="255" key="GridCell.Tab.1.left/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586609077238" />
-    <state width="1492" height="255" key="GridCell.Tab.1.right" timestamp="1586609077238">
+    <state width="746" height="255" key="GridCell.Tab.1.center/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586695455285" />
+    <state width="746" height="255" key="GridCell.Tab.1.left" timestamp="1586695455284">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
-    <state width="1492" height="255" key="GridCell.Tab.1.right/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586609077238" />
-    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1586620883925">
+    <state width="746" height="255" key="GridCell.Tab.1.left/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586695455284" />
+    <state width="746" height="255" key="GridCell.Tab.1.right" timestamp="1586695455285">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state width="746" height="255" key="GridCell.Tab.1.right/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586695455285" />
+    <state x="349" y="152" width="1130" height="639" key="IDE.errors.dialog" timestamp="1586777264649">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="349" y="152" width="1130" height="639" key="IDE.errors.dialog/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586690498847" />
+    <state x="349" y="152" key="IDE.errors.dialog/0.0.1536.834@0.0.1536.834" timestamp="1586777264649" />
+    <state x="358" y="124" key="SettingsEditor" timestamp="1586807019367">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="-1101" y="-8" key="SettingsEditor/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586690679589" />
+    <state x="358" y="124" key="SettingsEditor/0.0.1536.834@0.0.1536.834" timestamp="1586807019367" />
+    <state x="479" y="136" width="577" height="562" key="find.popup" timestamp="1586806320026">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="479" y="136" width="577" height="562" key="find.popup/0.0.1536.834@0.0.1536.834" timestamp="1586806320026" />
+    <state x="596" y="184" key="refactoring.ChangeSignatureDialog" timestamp="1586712262913">
+      <screen x="0" y="0" width="1536" height="834" />
+    </state>
+    <state x="596" y="184" key="refactoring.ChangeSignatureDialog/0.0.1536.834@0.0.1536.834" timestamp="1586712262913" />
+    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup" timestamp="1586806901283">
       <screen x="0" y="0" width="1536" height="834" />
     </state>
     <state x="431" y="155" width="672" height="678" key="search.everywhere.popup/0.0.1536.834/-1920.-287.1920.1050@0.0.1536.834" timestamp="1586620883925" />
+    <state x="431" y="155" width="672" height="678" key="search.everywhere.popup/0.0.1536.834@0.0.1536.834" timestamp="1586806901283" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />

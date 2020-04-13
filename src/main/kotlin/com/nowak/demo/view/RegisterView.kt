@@ -19,6 +19,8 @@ class RegisterView : View() {
     val registerController: RegisterController by inject()
 
     override val root = vbox {
+        this.id="scene-bg"
+        this.stylesheets.add("styles.css")
         label {
             text = "Invoicer Manager"
             alignment = Pos.TOP_CENTER
@@ -38,7 +40,19 @@ class RegisterView : View() {
                     textfield(userModel.username) {
                         required()
                         promptText = "Username"
+                        validator {
+                            when{
+                                it.isNullOrBlank() -> error("Username cannot be blank")
+                                else
+                                    -> null
+                            }
+                        }
+                        style {
+                            id = "text-field"
+                            stylesheets.add("styles.css")
+                        }
                     }
+
                 }
                 field("E-mail") {
                     textfield(userModel.email) {
@@ -54,6 +68,10 @@ class RegisterView : View() {
                                 else
                                 -> null
                             }
+                        }
+                        style {
+                            id = "text-field"
+                            stylesheets.add("styles.css")
                         }
                     }
                 }
@@ -71,6 +89,10 @@ class RegisterView : View() {
                                 -> null
                             }
                         }
+                        style {
+                            id = "text-field"
+                            stylesheets.add("styles.css")
+                        }
                     }
                 }
                 field("Birth date") {
@@ -85,6 +107,10 @@ class RegisterView : View() {
                                 else
                                 -> null
                             }
+                        }
+                        style {
+                            id = "text-field"
+                            stylesheets.add("styles.css")
                         }
                         setOnKeyPressed {
                             if (it.code == KeyCode.ENTER) {
@@ -108,8 +134,10 @@ class RegisterView : View() {
                     addClass(Styles.vbox)
                     button {
                         text = "Register"
-                        this.id = "login-button"
-                        this.stylesheets.add("styles.css")
+                        style {
+                            id = "login-button"
+                            stylesheets.add("styles.css")
+                        }
                         enableWhen {
                             privacyPolicyCheckbox
                             userModel.valid
@@ -132,8 +160,10 @@ class RegisterView : View() {
 
                     button {
                         text = "Go back to login"
-                        this.id = "login-button"
-                        this.stylesheets.add("styles.css")
+                        style {
+                            id = "login-button"
+                            stylesheets.add("styles.css")
+                        }
                         action {
                             userModel.rollback()
                             replaceWith(LoginView::class,
@@ -145,6 +175,7 @@ class RegisterView : View() {
             }
         }
     }
+
 }
 
 fun checkIfEmailIsValid(email: String?): Boolean {
