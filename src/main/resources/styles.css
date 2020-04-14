@@ -10,10 +10,19 @@
     linear-gradient(white 0%, #f3f3f3 50%, #ececec 40%, #f2f2f2 80%);
     -fx-background-insets: 0 0 0 0, 0, 1;
     -fx-background-radius: 5, 5, 4;
-    -fx-padding: 3 20 3 20;
+    -fx-padding: 3 15 3 15;
     -fx-text-fill: #000000;
     -fx-font-weight: bold;
     -fx-font-size: 16px;
+}
+#workspace-button:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.08),
+    linear-gradient(#9a9a9a, black),
+    linear-gradient(white 0%, #f3f3f3 50%, #ececec 50%, #f2f2f2 100%);
+}
+
+#workspace-button:pressed {
+    -fx-background-color: lightgrey;
 }
 
 #login-button {
@@ -28,6 +37,16 @@
     -fx-font-size: 15px;
 }
 
+#login-button:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.08),
+    linear-gradient(#9a9a9a, black),
+    linear-gradient(white 0%, #f3f3f3 50%, #ececec 50%, #f2f2f2 100%);
+}
+
+#login-button:pressed {
+    -fx-background-color: lightgrey;
+}
+
 #dashboard-button {
     -fx-background-color: rgba(0, 0, 0, 0.08),
     linear-gradient(#9a9a9a, #e20c3e),
@@ -38,6 +57,15 @@
     -fx-text-fill: #000000;
     -fx-font-weight: normal;
     -fx-font-size: 15px;
+}
+#dashboard-button:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.08),
+    linear-gradient(#9a9a9a, black),
+    linear-gradient(white 0%, #f3f3f3 50%, #ececec 50%, #f2f2f2 100%);
+}
+
+#dashboard-button:pressed {
+    -fx-background-color: lightgrey;
 }
 
 #scene-bg {
@@ -50,18 +78,28 @@
 }
 
 #second-scene-bg {
-    -fx-background-color: linear-gradient(to right top, #fff1eb 0%, #f9acac 100%);
+    -fx-background-color: linear-gradient(to right top, #fff1eb 0%, #eec2c2 100%);
+}
+
+#third-scene-bg {
+    -fx-background-color: linear-gradient(to right top, #fff1eb 0%, #ded2bf 100%);
 }
 
 #modal {
-    -fx-pref-width: 300.0;
-    -fx-pref-height: 400.0;
+    -fx-pref-width: 400.0;
+    -fx-pref-height: 250.0;
     -fx-spacing: 12.0;
+    -fx-padding: 8 10 8 10;
     -fx-alignment: top-center;
-    -fx-background-color: linear-gradient(to right top, #fff1eb 0%, rgba(250, 245, 245, 0.29) 100%);
+    -fx-background-color: linear-gradient(to right top, #fff1eb 0%, rgba(250, 245, 245, 0.15) 100%);
 }
-#status-label{
+
+#status-label {
     -fx-text-fill: green;
     -fx-font-size: 20.0;
     -fx-font-weight: normal;
+}
+
+#password-label {
+    -fx-opacity: 0.3;
 }

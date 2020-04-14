@@ -3,6 +3,7 @@ package com.nowak.demo.view
 import com.example.demo.app.Styles
 import com.nowak.demo.controllers.LoginController
 import com.nowak.demo.database.InvoicerDatabase
+import com.nowak.demo.mailing.MailSender
 
 import com.nowak.demo.models.login.User
 import com.nowak.demo.models.login.UserModel
@@ -84,7 +85,7 @@ class LoginView : View() {
 
                         setOnKeyPressed {
                             action {
-                                if (loginController.login(userModel.username.value!!,
+                                 if (loginController.login(userModel.username.value!!,
                                                 userModel.password.value!!)) {
                                     loggedUser = loginController.getLoggedUser(userModel.username.value)
                                     userModel.rollback()

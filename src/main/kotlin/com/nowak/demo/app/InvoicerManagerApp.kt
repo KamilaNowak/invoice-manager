@@ -8,8 +8,8 @@ import tornadofx.*
 class InvoicerManagerApp: App(LoginView::class, Styles::class){
     override fun start(stage: Stage) {
         with(stage){
-            width=600.0
-            height=800.0
+            width=800.0
+            height=900.0
             isResizable=true
         }
         stage.icons.add(Image("static/invoice-logo.jpg"))

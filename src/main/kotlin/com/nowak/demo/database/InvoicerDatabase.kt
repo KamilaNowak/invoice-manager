@@ -1,29 +1,38 @@
 package com.nowak.demo.database
 
-import com.nowak.demo.models.invoices.CompanyInvoice
 import com.nowak.demo.models.login.User
-import com.sun.org.apache.xpath.internal.operations.Bool
-import javafx.collections.ObservableArray
-import java.lang.Exception
-import java.sql.*
+import java.io.FileInputStream
+import java.sql.Connection
+import java.sql.DriverManager
+import java.sql.PreparedStatement
+import java.sql.SQLException
 import java.time.LocalDate
+import java.util.*
 
 class InvoicerDatabase() {
 
-    //development
-    val jdbcUrl = "jdbc:postgresql://localhost:5432/invoicer"
-    val username = "postgres"
-    val password = "root"
-
+    //    val properties = Properties()
+//    val inputStream = FileInputStream("src\\main\\resources\\app.properties")
+//
+//    var jdbcUrl: String = ""
+//    var username: String = ""
+//    var password: String = ""
+    val jdbcUrl: String = "jdbc:postgresql://localhost:5432/invoicer"
+    val username: String = "postgres"
+    val password: String = "root"
     lateinit var connection: Connection
+
+    init {
+        connection = connect()
+//        properties.load(inputStream)
+//        jdbcUrl = properties.getProperty("db.url")
+//        username = properties.getProperty("db.username")
+//        password = properties.getProperty("db.password")
+    }
 
     fun connect(): Connection {
         Class.forName("org.postgresql.Driver")
         return DriverManager.getConnection(jdbcUrl, username, password)
-    }
-
-    init {
-        connection = connect()
     }
 
     fun findAll(): User {
@@ -164,14 +173,17 @@ class InvoicerDatabase() {
             if (newEmail != null) {
                 preparedStatement = connection.prepareStatement("UPDATE users SET email= ? WHERE id= ?")
                 preparedStatement.setString(1, newEmail)
+                preparedStatement.setLong(2, userId)
             }
             if (newBirthDate != null) {
                 preparedStatement = connection.prepareStatement("UPDATE users SET date_of_birth= ? WHERE id= ?")
                 preparedStatement.setDate(1, convertToDate(newBirthDate))
+                preparedStatement.setLong(2, userId)
             }
             if (newPassword != null) {
                 preparedStatement = connection.prepareStatement("UPDATE users SET passwd= ? WHERE id= ?")
                 preparedStatement.setString(1, hashPassword(newPassword))
+                preparedStatement.setLong(2, userId)
             }
             preparedStatement.executeUpdate()
             preparedStatement.close()
@@ -180,5 +192,17 @@ class InvoicerDatabase() {
             throw SQLException("Cannot execute query : Cause: ${e.cause} ; Message: ${e.message}")
         }
         return false
+    }
+
+    fun getPasswordByUserId(userId: Long): String {
+        try {
+            val preparedStatement = connection.prepareStatement("SELECT passwd FROM users WHERE id= ?")
+            preparedStatement.setLong(1, userId)
+            val resultSet = preparedStatement.executeQuery()
+            resultSet.next()
+            return resultSet.getString("passwd")
+        } catch (e: Exception) {
+            throw SQLException("Cannot execute query : Cause: ${e.cause} ; Message: ${e.message}")
+        }
     }
 }

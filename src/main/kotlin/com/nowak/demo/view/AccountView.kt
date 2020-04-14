@@ -3,20 +3,16 @@ package com.nowak.demo.view
 import com.nowak.demo.controllers.UserController
 import com.nowak.demo.database.InvoicerDatabase
 import com.nowak.demo.models.login.User
-import com.nowak.demo.models.login.UserModel
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.geometry.Pos
-import javafx.scene.Parent
+
 import tornadofx.*
 import java.time.LocalDate
 
 class AccountView : View() {
-
-    val loggedEmail = SimpleStringProperty()
-    val loggedBirthDate = SimpleObjectProperty<LocalDate>()
-    val newPassword = SimpleStringProperty()
-    val invoicerDatabase = InvoicerDatabase()
 
     val userController: UserController by inject()
     var user: User
@@ -26,13 +22,14 @@ class AccountView : View() {
     }
 
     override val root = vbox {
+        this.stylesheets.add("styles.css")
         style {
             id = "second-scene-bg"
-            stylesheets.add("styles.css")
             paddingAll = 15.0
         }
         button {
             text = "Go back"
+            graphic = FontAwesomeIconView(FontAwesomeIcon.CHEVRON_LEFT)
             action {
                 replaceWith(WorkspaceView::class,
                         ViewTransition.Slide(0.5.seconds,
@@ -40,10 +37,10 @@ class AccountView : View() {
             }
             style {
                 id = "dashboard-button"
-                stylesheets.add("styles.css")
                 paddingBottom = 20.0
             }
         }
+        label { paddingAll = 5.0 }
         label {
             text = "Account details"
             style { fontSize = 20.px }
@@ -60,13 +57,11 @@ class AccountView : View() {
                     isDisable = true
                     style {
                         id = "text-field"
-                        stylesheets.add("styles.css")
                     }
                 }
                 button("Change") {
                     style {
                         id = "dashboard-button"
-                        stylesheets.add("styles.css")
                     }
                     action { openInternalWindow<EditUsername>() }
                 }
@@ -78,19 +73,12 @@ class AccountView : View() {
                 }
                 textfield(user.email) {
                     isDisable = true
-                    style {
-                        id = "text-field"
-                        stylesheets.add("styles.css")
-                    }
+                    style { id = "text-field" }
                 }
-                button {
-                    text = "Change"
-                    style {
-                        id = "dashboard-button"
-                        stylesheets.add("styles.css")
-                    }
+                button("Change") {
+                    style { id = "dashboard-button" }
                     action {
-
+                        openInternalWindow<EditEmail>()
                     }
                 }
             }
@@ -101,60 +89,44 @@ class AccountView : View() {
                 }
                 textfield(user.birthDate.toString()) {
                     isDisable = true
-                    style {
-                        id = "text-field"
-                        stylesheets.add("styles.css")
-                    }
+                    style { id = "text-field" }
                 }
                 button("Change") {
-                    style {
-                        id = "dashboard-button"
-                        stylesheets.add("styles.css")
+                    style {id = "dashboard-button" }
+                    action{
+                        openInternalWindow<EditBirthDate>()
                     }
                 }
             }
             hbox {
                 spacing = 10.0
-                label("Registration date") {
-                    style { fontSize = 17.px }
-                }
+                label("Registration date") { style { fontSize = 17.px } }
                 textfield(user.createdAt.toString()) {
                     isDisable = true
-                    style {
-                        id = "text-field"
-                        stylesheets.add("styles.css")
-                    }
+                    style { id = "text-field" }
                 }
             }
             hbox {
                 spacing = 10.0
-                label("Client ID") {
-                    style { fontSize = 17.px }
-                }
+                label("Client ID") { style { fontSize = 17.px } }
                 textfield("#${user.id}") {
                     isDisable = true
-                    style {
-                        id = "text-field"
-                        stylesheets.add("styles.css")
-                    }
+                    style { id = "text-field" }
                 }
             }
             label { paddingAll = 10.0 }
             hbox {
                 spacing = 10.0
-                label("Secure your account") {
-                    style { fontSize = 17.px }
-                }
+                label("Secure your account") { style { fontSize = 17.px } }
                 button {
                     text = "Change password"
-                    style {
-                        id = "dashboard-button"
-                        stylesheets.add("styles.css")
+                    style {id = "dashboard-button"}
+                    action{
+                        openInternalWindow<EditPassword>()
                     }
                 }
             }
         }
-
     }
 }
 

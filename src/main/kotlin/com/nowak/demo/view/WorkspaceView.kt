@@ -2,6 +2,7 @@ package com.nowak.demo.view
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView
+import javafx.application.Platform
 import tornadofx.*
 
 var loggedUser: Long = 0
@@ -34,7 +35,7 @@ class WorkspaceView : Workspace("Invoicer", NavigationMode.Tabs) {
                                 ViewTransition.Direction.LEFT))
             }
         }
-        dock<DashboradView>()
+        dock<CompanyInvoicesView>()
         dock<StatisticsView>()
     }
 }

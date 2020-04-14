@@ -4,29 +4,29 @@ import com.nowak.demo.controllers.UserController
 import javafx.beans.property.SimpleStringProperty
 import tornadofx.*
 
-class EditUsername : View("Change username") {
+class EditEmail :  View("Change email") {
 
-    val loggedUsername = SimpleStringProperty()
+    val loggedEmail = SimpleStringProperty()
     val userController: UserController by inject()
     val status = SimpleStringProperty("")
 
     override val root = vbox {
         this.stylesheets.add("styles.css")
         style { id = "modal" }
-        label("Type your new username") { style { fontSize = 20.px } }
-        textfield(loggedUsername) {
+        label("Type your new email") { style { fontSize = 20.px } }
+        textfield(loggedEmail) {
             style { id = "text-field" }
         }
         button("Submit") {
-            enableWhen(loggedUsername.isNotBlank())
+            enableWhen(loggedEmail.isNotBlank())
             style { id = "dashboard-button" }
             action {
-                if(!userController.checkUsernameEmailAvailability(username = loggedUsername.value)) {
-                    if (userController.updateUser(userId = loggedUser, newUsername = loggedUsername.value))
+                if(!userController.checkUsernameEmailAvailability(email = loggedEmail.value)) {
+                    if (userController.updateUser(userId = loggedUser, newEmail = loggedEmail.value))
                         status.value = "Successfully updated"
                     else status.value = "Something went wrong"
                 }
-                else status.value="Username is taken. Try another one "
+                else status.value="Email is taken. Try another one "
             }
         }
         label().bind(status)
