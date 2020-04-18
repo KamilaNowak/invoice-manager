@@ -8,9 +8,9 @@ import java.time.LocalDate
 
 class EditBirthDate : View("Change birth date") {
 
-    val loggedBirthDate = SimpleObjectProperty<LocalDate>()
-    val userController: UserController by inject()
-    val status = SimpleStringProperty("")
+    private val loggedBirthDate = SimpleObjectProperty<LocalDate>()
+    private val userController: UserController by inject()
+    private val status = SimpleStringProperty("")
 
     override val root = vbox {
         this.stylesheets.add("styles.css")

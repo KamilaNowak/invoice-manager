@@ -5,10 +5,8 @@ import tornadofx.*
 
 class StatisticsView : View("Statistics"){
     override val root = vbox{
-        style{
-            id="third-scene-bg"
-            stylesheets.add("styles.css")
-        }
+        stylesheets.add("styles.css")
+        style{ id="third-scene-bg" }
         label("to implement")
     }
 }

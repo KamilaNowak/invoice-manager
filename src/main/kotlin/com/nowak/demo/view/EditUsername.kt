@@ -6,9 +6,9 @@ import tornadofx.*
 
 class EditUsername : View("Change username") {
 
-    val loggedUsername = SimpleStringProperty()
-    val userController: UserController by inject()
-    val status = SimpleStringProperty("")
+    private val loggedUsername = SimpleStringProperty()
+    private val userController: UserController by inject()
+    private val status = SimpleStringProperty("")
 
     override val root = vbox {
         this.stylesheets.add("styles.css")

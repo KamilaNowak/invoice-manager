@@ -1,20 +1,15 @@
 package com.nowak.demo.view
 
 import com.nowak.demo.controllers.UserController
-import com.nowak.demo.database.InvoicerDatabase
 import com.nowak.demo.models.login.User
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView
-import javafx.beans.property.SimpleObjectProperty
-import javafx.beans.property.SimpleStringProperty
-import javafx.geometry.Pos
-
 import tornadofx.*
-import java.time.LocalDate
+
 
 class AccountView : View() {
 
-    val userController: UserController by inject()
+    private val userController: UserController by inject()
     var user: User
 
     init {
@@ -55,14 +50,10 @@ class AccountView : View() {
                 }
                 textfield(user.username) {
                     isDisable = true
-                    style {
-                        id = "text-field"
-                    }
+                    style { id = "text-field" }
                 }
                 button("Change") {
-                    style {
-                        id = "dashboard-button"
-                    }
+                    style { id = "dashboard-button" }
                     action { openInternalWindow<EditUsername>() }
                 }
             }
@@ -77,9 +68,7 @@ class AccountView : View() {
                 }
                 button("Change") {
                     style { id = "dashboard-button" }
-                    action {
-                        openInternalWindow<EditEmail>()
-                    }
+                    action { openInternalWindow<EditEmail>() }
                 }
             }
             hbox {
@@ -93,9 +82,7 @@ class AccountView : View() {
                 }
                 button("Change") {
                     style {id = "dashboard-button" }
-                    action{
-                        openInternalWindow<EditBirthDate>()
-                    }
+                    action{ openInternalWindow<EditBirthDate>() }
                 }
             }
             hbox {
@@ -121,9 +108,7 @@ class AccountView : View() {
                 button {
                     text = "Change password"
                     style {id = "dashboard-button"}
-                    action{
-                        openInternalWindow<EditPassword>()
-                    }
+                    action{ openInternalWindow<EditPassword>() }
                 }
             }
         }

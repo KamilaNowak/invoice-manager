@@ -1,13 +1,11 @@
 package com.nowak.demo.controllers
 
-import com.nowak.demo.database.InvoicerDatabase
-import com.nowak.demo.view.WorkspaceView
-
+import com.nowak.demo.database.InvoiceDatabase
 import tornadofx.*
 
 class LoginController : Controller(){
 
-    val invoiceDatabase = InvoicerDatabase()
+    private val invoiceDatabase = InvoiceDatabase()
 
     fun login(username: String, password:String) :Boolean{
         return invoiceDatabase

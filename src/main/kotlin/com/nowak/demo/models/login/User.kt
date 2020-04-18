@@ -24,6 +24,6 @@ class User(id: Long, username: String, password: String, email: String, birthDat
     var birthDate by birthDateProperty
 
     override fun toString(): String {
-        return "User ( ${id}, ${username}, ${password}, ${email}, ${birthDate}"
+        return "User (${id},${username},${password},${email},${birthDate},${createdAt})\n"
     }
 }

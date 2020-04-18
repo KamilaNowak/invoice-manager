@@ -6,9 +6,9 @@ import tornadofx.*
 
 class EditEmail :  View("Change email") {
 
-    val loggedEmail = SimpleStringProperty()
-    val userController: UserController by inject()
-    val status = SimpleStringProperty("")
+    private val loggedEmail = SimpleStringProperty()
+    private val userController: UserController by inject()
+    private val status = SimpleStringProperty("")
 
     override val root = vbox {
         this.stylesheets.add("styles.css")

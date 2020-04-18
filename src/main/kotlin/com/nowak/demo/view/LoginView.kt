@@ -2,26 +2,15 @@ package com.nowak.demo.view
 
 import com.example.demo.app.Styles
 import com.nowak.demo.controllers.LoginController
-import com.nowak.demo.database.InvoicerDatabase
-import com.nowak.demo.mailing.MailSender
-
-import com.nowak.demo.models.login.User
 import com.nowak.demo.models.login.UserModel
-import  de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon.USER
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView
 import javafx.geometry.Pos
-import javafx.scene.Parent
-import javafx.scene.input.KeyCode
-
 import tornadofx.*
-import java.time.LocalDate
-import javax.inject.Inject
 
 
 class LoginView : View() {
 
-    var userModel = UserModel()
-    val loginController: LoginController by inject()
+    private var userModel = UserModel()
+    private val loginController: LoginController by inject()
 
     init {
     }
@@ -31,12 +20,9 @@ class LoginView : View() {
         this.stylesheets.add("styles.css")
 
         top {
-            label(" Invoicer Manager") {
+            label(" Invoice Manager") {
                 alignment = Pos.TOP_CENTER
-                style {
-                    id = "logo-label"
-                    stylesheets.add("styles.css")
-                }
+                style { id = "logo-label" }
             }
         }
         center = form {
@@ -55,15 +41,10 @@ class LoginView : View() {
                             when {
                                 it.isNullOrEmpty() || it.isNullOrBlank()
                                 -> error(" Username cannot be empty")
-
-                                else
-                                -> null
+                                else -> null
                             }
                         }
-                        style {
-                            id = "text-field"
-                            stylesheets.add("styles.css")
-                        }
+                        style { id = "text-field" }
                     }
                 }
                 field("Password") {
@@ -74,27 +55,21 @@ class LoginView : View() {
                             when {
                                 it.isNullOrEmpty() || it.isNullOrBlank()
                                 -> error("Password cannot be empty")
-                                else
-                                -> null
+                                else -> null
                             }
                         }
-                        style {
-                            id = "text-field"
-                            stylesheets.add("styles.css")
-                        }
+                        style { id = "text-field" }
 
                         setOnKeyPressed {
                             action {
-                                 if (loginController.login(userModel.username.value!!,
+                                if (loginController.login(userModel.username.value!!,
                                                 userModel.password.value!!)) {
                                     loggedUser = loginController.getLoggedUser(userModel.username.value)
                                     userModel.rollback()
                                     replaceWith(WorkspaceView::class,
                                             ViewTransition.Slide(0.5.seconds,
                                                     ViewTransition.Direction.LEFT))
-                                } else {
-                                    error("Invalid username or password")
-                                }
+                                } else error("Invalid username or password")
                             }
                         }
                     }
@@ -102,39 +77,30 @@ class LoginView : View() {
             }
             vbox {
                 addClass(Styles.vbox)
-                button {
-                    text = "Login"
-                    style {
-                        id = "login-button"
-                        stylesheets.add("styles.css")
-                    }
+                button("Login") {
+                    style { id = "login-button" }
                     enableWhen(userModel.valid)
                     action {
                         if (loginController.login(userModel.username.value!!,
                                         userModel.password.value!!)) {
-                                loggedUser = loginController.getLoggedUser(userModel.username.value)
-                                userModel.rollback()
-                                replaceWith(WorkspaceView::class,
-                                        ViewTransition.Slide(0.5.seconds,
-                                                ViewTransition.Direction.LEFT))
+                            loggedUser = loginController.getLoggedUser(userModel.username.value)
+                            userModel.rollback()
+                            replaceWith(WorkspaceView::class,
+                                    ViewTransition.Slide(0.5.seconds,
+                                            ViewTransition.Direction.LEFT))
 
-                            } else {
-                            error("Invalid username or password")
-                        }
+                        } else error("Invalid username or password")
                     }
                 }
 
                 button("Register") {
-                    this.id = "login-button"
-                    this.stylesheets.add("styles.css")
                     action {
                         replaceWith(RegisterView::class,
                                 ViewTransition.Slide(0.5.seconds,
                                         ViewTransition.Direction.LEFT))
                         userModel.rollback()
                     }
-                }.apply {
-
+                    style { id = "login-button" }
                 }
             }
         }

@@ -20,7 +20,6 @@ class Styles : Stylesheet() {
         vbox{
             padding=box(12.px)
             spacing=10.px
-          //  backgroundColor = multi(c("#E0E0E0"))
         }
 
         form{

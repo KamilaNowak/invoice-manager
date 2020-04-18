@@ -6,10 +6,10 @@ import tornadofx.*
 
 class EditPassword : View("Change password") {
 
-    val newPassword = SimpleStringProperty()
-    val oldPassword = SimpleStringProperty()
-    val userController: UserController by inject()
-    val status = SimpleStringProperty("")
+    private val newPassword = SimpleStringProperty()
+    private val oldPassword = SimpleStringProperty()
+    private val userController: UserController by inject()
+    private val status = SimpleStringProperty("")
 
     override val root = vbox {
         this.stylesheets.add("styles.css")

@@ -13,9 +13,9 @@ import tornadofx.*
 
 class CompanyDetailsWizardView : View("Owner informations") {
 
-    val ownerModel = OwnerModel()
-    val addressModel = AddressDetailsModel()
-    val companyModel = CompanyModel()
+    private val ownerModel = OwnerModel()
+    private val addressModel = AddressDetailsModel()
+    private val companyModel = CompanyModel()
 
 
     override fun onSave() {
@@ -23,7 +23,7 @@ class CompanyDetailsWizardView : View("Owner informations") {
                 Owner(0,ownerModel.name.value, ownerModel.surname.value, ownerModel.email.value, ownerModel.pid.value.toInt())).value
         companyModel.address.value =  SimpleObjectProperty<AddressDetails>(
                 AddressDetails(0,addressModel.country.value, addressModel.city.value, addressModel.street.value, addressModel.building.value.toInt())).value
-        isComplete = companyModel.commit()
+       //isComplete = companyModel.commit(companyModel.companyName, companyModel.nip)
 
         val scope =Scope()
         setInScope(companyModel, scope)

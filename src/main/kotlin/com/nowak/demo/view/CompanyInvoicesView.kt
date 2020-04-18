@@ -6,18 +6,14 @@ import tornadofx.*
 
 class CompanyInvoicesView : View("Company Invoices") {
 
-    val invoiceController: InvoiceController by inject()
+    private val invoiceController: InvoiceController by inject()
 
     override val root = vbox {
-        style {
-            id = "third-scene-bg"
-            stylesheets.add("styles.css")
-        }
+        stylesheets.add("styles.css")
+        style { id = "third-scene-bg" }
         button(" New company Invoice") {
             id = "dashboard-button"
-            action {
-                invoiceController.addNewCompanyInvoice()
-            }
+            action { invoiceController.addNewCompanyInvoice() }
         }
     }
 }

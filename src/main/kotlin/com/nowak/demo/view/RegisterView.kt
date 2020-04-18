@@ -1,9 +1,7 @@
 package com.nowak.demo.view
 
 import com.example.demo.app.Styles
-import com.nowak.demo.controllers.LoginController
 import com.nowak.demo.controllers.RegisterController
-import com.nowak.demo.models.login.User
 import com.nowak.demo.models.login.UserModel
 import javafx.beans.property.SimpleBooleanProperty
 import javafx.geometry.Orientation
@@ -13,26 +11,18 @@ import tornadofx.*
 import java.util.regex.Pattern
 
 class RegisterView : View() {
-    val URL_PRIVACY_POLICY = "https://idpc.org.mt/en/Documents/Sample%20Privacy%20Policy.pdf"
-    val userModel = UserModel()
-    val privacyPolicyCheckbox = SimpleBooleanProperty()
-    val registerController: RegisterController by inject()
+    private val URL_PRIVACY_POLICY = "https://idpc.org.mt/en/Documents/Sample%20Privacy%20Policy.pdf"
+    private val userModel = UserModel()
+    private val privacyPolicyCheckbox = SimpleBooleanProperty()
+    private val registerController: RegisterController by inject()
 
     override val root = vbox {
-        this.id="scene-bg"
-        this.stylesheets.add("styles.css")
-        label {
-            text = "Invoicer Manager"
-            alignment = Pos.TOP_CENTER
-            this.id = "logo-label"
-            this.stylesheets.add("styles.css")
+        id = "scene-bg"
+        stylesheets.add("styles.css")
 
-        }
+        label(text = "Invoicer Manager") { id = "logo-label" }
         addClass(Styles.vbox)
-
-        label {
-            text = "Register"
-        }
+        label(text = "Register")
 
         form {
             fieldset(labelPosition = Orientation.HORIZONTAL) {
@@ -41,16 +31,12 @@ class RegisterView : View() {
                         required()
                         promptText = "Username"
                         validator {
-                            when{
+                            when {
                                 it.isNullOrBlank() -> error("Username cannot be blank")
-                                else
-                                    -> null
+                                else -> null
                             }
                         }
-                        style {
-                            id = "text-field"
-                            stylesheets.add("styles.css")
-                        }
+                        style { id = "text-field" }
                     }
 
                 }
@@ -64,15 +50,10 @@ class RegisterView : View() {
                                 -> error("Email cannot be empty")
 
                                 !checkIfEmailIsValid(it) -> error("E-mail is not valid")
-
-                                else
-                                -> null
+                                else -> null
                             }
                         }
-                        style {
-                            id = "text-field"
-                            stylesheets.add("styles.css")
-                        }
+                        style { id = "text-field" }
                     }
                 }
                 field("Password") {
@@ -85,14 +66,10 @@ class RegisterView : View() {
                                 -> error("Password cannot be empty")
 
                                 it!!.length < 3 -> error("Password must be at least 4 charactes")
-                                else
-                                -> null
+                                else -> null
                             }
                         }
-                        style {
-                            id = "text-field"
-                            stylesheets.add("styles.css")
-                        }
+                        style { id = "text-field" }
                     }
                 }
                 field("Birth date") {
@@ -104,14 +81,10 @@ class RegisterView : View() {
                                         it?.dayOfWeek.toString().isEmpty() ||
                                         it?.dayOfYear.toString().isEmpty()
                                 -> error("Birth date cannot be empty")
-                                else
-                                -> null
+                                else -> null
                             }
                         }
-                        style {
-                            id = "text-field"
-                            stylesheets.add("styles.css")
-                        }
+                        style { id = "text-field" }
                         setOnKeyPressed {
                             if (it.code == KeyCode.ENTER) {
                                 if (userModel.isValid) {
@@ -125,19 +98,13 @@ class RegisterView : View() {
                 }
                 checkbox("", privacyPolicyCheckbox) {
                     hyperlink(" Agree with Privacy Policy")
-                            .action {
-                                hostServices.showDocument(URL_PRIVACY_POLICY)
-                            }
+                            .action { hostServices.showDocument(URL_PRIVACY_POLICY) }
                     require(true)
                 }
                 vbox {
                     addClass(Styles.vbox)
-                    button {
-                        text = "Register"
-                        style {
-                            id = "login-button"
-                            stylesheets.add("styles.css")
-                        }
+                    button("Register") {
+                        style { id = "login-button" }
                         enableWhen {
                             privacyPolicyCheckbox
                             userModel.valid
@@ -152,18 +119,12 @@ class RegisterView : View() {
                                 replaceWith(LoginView::class,
                                         ViewTransition.Swap(0.5.seconds,
                                                 ViewTransition.Direction.RIGHT))
-                            } else {
-                                error("Username or email is taken. Try with another ones.")
-                            }
+                            } else error("Username or email is taken. Try with another ones.")
                         }
                     }
 
-                    button {
-                        text = "Go back to login"
-                        style {
-                            id = "login-button"
-                            stylesheets.add("styles.css")
-                        }
+                    button("Go back to login") {
+                        style { id = "login-button" }
                         action {
                             userModel.rollback()
                             replaceWith(LoginView::class,

@@ -13,7 +13,7 @@ class InvoicerManagerApp: App(LoginView::class, Styles::class){
             isResizable=true
         }
         stage.icons.add(Image("static/invoice-logo.jpg"))
-        stage.title="Invoicer Manager"
+        stage.title="Invoice Manager"
         super.start(stage)
     }
     init {
