@@ -15,6 +15,9 @@ class OwnerModel : ItemViewModel<Owner>(){
     val email = bind{
         item?.emailProperty
     }
+    val phoneNumber = bind{
+        item?.phoneNumberProperty
+    }
     val pid =bind{
         item?.pidProperty
     }

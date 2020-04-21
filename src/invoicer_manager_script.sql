@@ -48,6 +48,7 @@ CREATE TABLE owners(
     name VARCHAR(256) DEFAULT NULL,
     surname VARCHAR(256) DEFAULT NULL,
     email VARCHAR(128) DEFAULT NULL,
+    phone_number BIGINT DEFAULT NULL,
     pid INT DEFAULT NULL
 )
 CREATE TABLE address_details(
@@ -57,21 +58,30 @@ CREATE TABLE address_details(
     street VARCHAR(128) DEFAULT NULL,
     building INTEGER DEFAULT NULL
 )
-CREATE TABLE item(
+CREATE TABLE items(
     id BIGSERIAL NOT NULL PRIMARY KEY,
     description VARCHAR(512) DEFAULT NULL,
-    invoice_id INTEGER DEFAULT NULL,
+    vat SMALLINT  DEFAULT NULL,
+    category VARCHAR(256) DEFAULT NULL,
+    invoice_comp_no VARCHAR(256) DEFAULT NULL,
+    invoice_pers_no VARCHAR(256) DEFAULT NULL,
 
-    CONSTRAINT invoice_id_fkey
-        FOREIGN KEY(invoice_id)
-            REFERENCES invoices(invoice_no)
+    CONSTRAINT invoice_comp_no_fkey
+        FOREIGN KEY(invoice_comp_no)
+            REFERENCES company_invoices(invoice_no)
+                ON DELETE NO ACTION
+                    ON UPDATE NO ACTION,
+
+    CONSTRAINT invoice_pers_no_fkey
+        FOREIGN KEY(invoice_pers_no)
+            REFERENCES personal_invoices(invoice_no)
                 ON DELETE NO ACTION
                     ON UPDATE NO ACTION
 )
 CREATE TABLE company_invoices(
     invoice_no VARCHAR(128) NOT NULL PRIMARY KEY,
     date_of_issue timestamp DEFAULT CURRENT_TIMESTAMP,
-    quantity INTEGER DEFAULT NULL,
+    quantity BIGINT DEFAULT NULL,
     amount BIGINT DEFAULT NULL,
     payment_option VARCHAR(64) DEFAULT NULL,
     prepared_by INTEGER DEFAULT NULL,
@@ -87,14 +97,15 @@ CREATE TABLE company_invoices(
         FOREIGN KEY(prepared_by)
             REFERENCES users(id)
                  ON DELETE NO ACTION
-                    ON UPDATE NO ACTION,
+                    ON UPDATE NO ACTION
 )
 CREATE TABLE personal_invoices(
     invoice_no VARCHAR(128) NOT NULL PRIMARY KEY,
     date_of_issue timestamp DEFAULT CURRENT_TIMESTAMP,
     quantity INTEGER DEFAULT NULL,
     amount BIGINT DEFAULT NULL,
-    payment_method VARCHAR(64) DEFAULT NULL,
+    payment_option VARCHAR(64) DEFAULT NULL,
+    discount SMALLINT DEFAULT NULL,
     customer_id INTEGER DEFAULT NULL,
     prepared_by INTEGER DEFAULT NULL,
 
@@ -108,5 +119,5 @@ CREATE TABLE personal_invoices(
         FOREIGN KEY(prepared_by)
             REFERENCES users(id)
                  ON DELETE NO ACTION
-                    ON UPDATE NO ACTION,
+                    ON UPDATE NO ACTION
 )

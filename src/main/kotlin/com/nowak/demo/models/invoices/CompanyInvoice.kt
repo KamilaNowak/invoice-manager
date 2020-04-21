@@ -2,22 +2,21 @@ package com.nowak.demo.models.invoices
 
 import com.nowak.demo.models.customers.Company
 import com.nowak.demo.models.customers.Customer
+import com.nowak.demo.models.items.Item
 import com.nowak.demo.models.login.User
-import javafx.beans.property.SimpleIntegerProperty
-import javafx.beans.property.SimpleLongProperty
-import javafx.beans.property.SimpleObjectProperty
-import javafx.beans.property.SimpleStringProperty
+import javafx.beans.property.*
+import javafx.collections.FXCollections
 import tornadofx.*
 import java.time.LocalDate
 
-class CompanyInvoice(invoiceNo: Long,
+class CompanyInvoice(invoiceNo: String,
                      dateOfIssue: LocalDate,
                      quantity: Int,
                      amount: Long,
                      paymentMethod: PaymentMethod,
                      company: Company,
-                     creator: User){
-    val invoiceNoProperty = SimpleLongProperty(invoiceNo)
+                     creator: User) {
+    val invoiceNoProperty = SimpleStringProperty(invoiceNo)
     var invoiceNo by invoiceNoProperty
 
     val dateOfIssueProperty = SimpleObjectProperty<LocalDate>(dateOfIssue)
@@ -37,5 +36,7 @@ class CompanyInvoice(invoiceNo: Long,
 
     val creatorProperty = SimpleObjectProperty<User>(creator)
     var creator by creatorProperty
+
+    val items = emptyList<Item>()
 
 }

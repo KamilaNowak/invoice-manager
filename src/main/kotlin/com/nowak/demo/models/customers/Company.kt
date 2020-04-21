@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import tornadofx.*
 
-class Company(id: Long,
+class Company(id: Long =0,
              companyName: String,
              nip:Long,
              address:AddressDetails,
@@ -28,7 +28,7 @@ class Company(id: Long,
     val owner by ownerProperty
 
     override fun toString(): String {
-        return "Company(idProperty=$idProperty, companyNameProperty=$companyNameProperty, nipProperty=$nipProperty, addressProperty=$addressProperty, ownerProperty=$ownerProperty)"
+        return "Company($idProperty, $companyNameProperty, $nipProperty, $addressProperty, $ownerProperty)"
     }
 
 

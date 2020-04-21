@@ -1,6 +1,6 @@
 import com.nowak.demo.controllers.LoginController;
 import com.nowak.demo.controllers.RegisterController;
-import com.nowak.demo.database.InvoiceDatabase;
+import com.nowak.demo.database.UserDatabase;
 import com.nowak.demo.models.login.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -16,11 +16,11 @@ import java.time.LocalDate;
 public class TestRegisterController {
 
     private static RegisterController registerController;
-    private static InvoiceDatabase invoiceDatabase;
+    private static UserDatabase userDatabase;
 
     @BeforeAll
     static void setUp() {
-        invoiceDatabase = new InvoiceDatabase();
+        userDatabase = new UserDatabase();
         registerController = new RegisterController();
     }
     @Test
@@ -35,7 +35,7 @@ public class TestRegisterController {
                 "90sg5p63zb@kbrm5u4v1q.com", LocalDate.of(2000, 1, 1), LocalDate.of(2020, 4, 18));
 
         boolean shouldReturnTrue = registerController.register(user2.getUsername(), user2.getPassword(),user2.getEmail(),user2.getBirthDate());
-        invoiceDatabase.deleteUserByUsername("qyv43n4g9w");
+        userDatabase.deleteUserByUsername("qyv43n4g9w");
 
         Assertions.assertTrue(shouldReturnTrue);
     }

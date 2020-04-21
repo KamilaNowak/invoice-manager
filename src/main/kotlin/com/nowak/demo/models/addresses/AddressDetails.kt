@@ -27,4 +27,9 @@ class AddressDetails(id: Long,
     val buildingProperty = SimpleIntegerProperty(building)
     var building by buildingProperty
 
+    override fun toString(): String {
+        return "$idProperty, $countryProperty, $cityProperty,$streetProperty, $buildingProperty)"
+    }
+
+
 }

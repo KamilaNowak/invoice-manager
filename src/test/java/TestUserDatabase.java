@@ -1,5 +1,5 @@
 import com.nowak.demo.database.DatabaseUtils;
-import com.nowak.demo.database.InvoiceDatabase;
+import com.nowak.demo.database.UserDatabase;
 import com.nowak.demo.models.login.User;
 
 
@@ -19,14 +19,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @EnabledOnJre(JRE.JAVA_8)
 @DisplayName("Database tests")
-class TestInvoiceDatabase {
+class TestUserDatabase {
 
-    private static InvoiceDatabase invoiceDatabase;
+    private static UserDatabase userDatabase;
     private static Connection connection;
 
     @BeforeAll
     static void setUp() {
-        invoiceDatabase = new InvoiceDatabase();
+        userDatabase = new UserDatabase();
         connection = DatabaseUtils.Connector.getConnection();
     }
     @Test
@@ -38,7 +38,7 @@ class TestInvoiceDatabase {
         User user = new User(1, "test", "$2a$10$HHNwc6T2ZTPHqp/DZX0WcOdt34VeIqoFSFL.3J3zs87AJ31Syap72",
                 "test@email.com", LocalDate.of(2000, 1, 1),
                 LocalDate.of(2020, 4, 18));
-        User userFromDb = invoiceDatabase.findUserByUsername("test");
+        User userFromDb = userDatabase.findUserByUsername("test");
 
         Assertions.assertEquals(user.getId(), userFromDb.getId());
         Assertions.assertEquals(user.getUsername(), userFromDb.getUsername());
@@ -50,7 +50,7 @@ class TestInvoiceDatabase {
 
     @Test
     void testfindAllUsers() {
-        ArrayList userList = invoiceDatabase.findAllUsers();
+        ArrayList userList = userDatabase.findAllUsers();
 
         Assertions.assertFalse(userList.isEmpty());
 
@@ -63,7 +63,7 @@ class TestInvoiceDatabase {
 
     @Test
     void testFindUserById() {
-        User user = invoiceDatabase.findUserById(2);
+        User user = userDatabase.findUserById(2);
 
         Assertions.assertEquals("johndoe", user.getUsername());
         Assertions.assertEquals("john@gmail.com", user.getEmail());
@@ -76,26 +76,26 @@ class TestInvoiceDatabase {
         User user = new User(1, "test", "test",
                 "test@gmail.com", LocalDate.of(2000, 1, 1),
                 LocalDate.of(2020, 4, 18));
-        boolean result = invoiceDatabase.checkIfAccountExists(user.getUsername(), user.getPassword());
+        boolean result = userDatabase.checkIfAccountExists(user.getUsername(), user.getPassword());
 
         Assertions.assertTrue(result);
     }
 
     @Test
     void testCheckUsernameEmailAvailability() {
-        boolean shouldReturnTrue = invoiceDatabase.checkUsernameEmailAvailability("test", "john@gmail.com");
+        boolean shouldReturnTrue = userDatabase.checkUsernameEmailAvailability("test", "john@gmail.com");
         Assertions.assertTrue(shouldReturnTrue);
 
-        boolean shouldReturnFalse = invoiceDatabase.checkUsernameEmailAvailability("ayrjwbqknt", "ibkffwbnap@emial.com");
+        boolean shouldReturnFalse = userDatabase.checkUsernameEmailAvailability("ayrjwbqknt", "ibkffwbnap@emial.com");
         Assertions.assertFalse(shouldReturnFalse);
     }
 
     @Test
     void testInsertNewUser() {
-        invoiceDatabase.insertNewUser("clarayu", "password123", "clarayu@mail.com",
+        userDatabase.insertNewUser("clarayu", "password123", "clarayu@mail.com",
                 LocalDate.of(1980, 2, 1));
-        User user = invoiceDatabase.findUserByUsername("clarayu");
-        invoiceDatabase.deleteUserByUsername("clarayu");
+        User user = userDatabase.findUserByUsername("clarayu");
+        userDatabase.deleteUserByUsername("clarayu");
 
         Assertions.assertTrue(user.getId() > 0);
         Assertions.assertTrue(user.getPassword().length() >= 60);
@@ -108,7 +108,7 @@ class TestInvoiceDatabase {
         Integer userId = 3;
         String username = "aliciasmith", email = "asmith@yahoo.com";
         LocalDate birthDate = LocalDate.of(1990, 4, 23);
-        boolean shouldReturnTrue = invoiceDatabase.updateUser(3, username, email, birthDate, "asmith");
+        boolean shouldReturnTrue = userDatabase.updateUser(3, username, email, birthDate, "asmith");
 
         Assertions.assertTrue(shouldReturnTrue);
     }
@@ -117,7 +117,7 @@ class TestInvoiceDatabase {
     void testGetPasswordByUserId() {
         String password;
         Integer userId = 1;
-        password =invoiceDatabase.getPasswordByUserId(1);
+        password =userDatabase.getPasswordByUserId(1);
 
         Assertions.assertTrue(password.length()>=60);
         Assertions.assertEquals("$2a$10$HHNwc6T2ZTPHqp/DZX0WcOdt34VeIqoFSFL.3J3zs87AJ31Syap72", password);
@@ -125,9 +125,9 @@ class TestInvoiceDatabase {
 
     @Test
     void testDeleteUserByUsername(){
-        invoiceDatabase.insertNewUser("6527040qv0xdbq0", "5thdzl8sxqmrg2n", "6527040qv0xdbq0@mail.com",
+        userDatabase.insertNewUser("6527040qv0xdbq0", "5thdzl8sxqmrg2n", "6527040qv0xdbq0@mail.com",
                 LocalDate.of(1980, 2, 1));
-        boolean shouldReturnTrue = invoiceDatabase.deleteUserByUsername("6527040qv0xdbq0");
+        boolean shouldReturnTrue = userDatabase.deleteUserByUsername("6527040qv0xdbq0");
 
         Assertions.assertTrue(shouldReturnTrue);
     }

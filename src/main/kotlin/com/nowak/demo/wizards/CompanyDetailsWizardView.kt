@@ -20,7 +20,7 @@ class CompanyDetailsWizardView : View("Owner informations") {
 
     override fun onSave() {
         companyModel.owner.value=SimpleObjectProperty<Owner>(
-                Owner(0,ownerModel.name.value, ownerModel.surname.value, ownerModel.email.value, ownerModel.pid.value.toInt())).value
+                Owner(0,ownerModel.name.value, ownerModel.surname.value, ownerModel.email.value, ownerModel.phoneNumber.value.toLong(), ownerModel.pid.value.toInt())).value
         companyModel.address.value =  SimpleObjectProperty<AddressDetails>(
                 AddressDetails(0,addressModel.country.value, addressModel.city.value, addressModel.street.value, addressModel.building.value.toInt())).value
        //isComplete = companyModel.commit(companyModel.companyName, companyModel.nip)
@@ -48,6 +48,13 @@ class CompanyDetailsWizardView : View("Owner informations") {
                 }
                 field("E-mail") {
                     textfield(ownerModel.email) {
+                        style { id = "text-field" }
+                        required()
+                    }
+                }
+
+                field("Phone number") {
+                    textfield(ownerModel.phoneNumber) {
                         style { id = "text-field" }
                         required()
                     }
