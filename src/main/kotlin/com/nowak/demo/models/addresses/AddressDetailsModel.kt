@@ -18,4 +18,13 @@ class AddressDetailsModel : ItemViewModel<AddressDetails>(){
     val building = bind{
         item?.buildingProperty
     }
+
+    companion object Dto{
+        fun convertAddressToDto(addressModel: AddressDetailsModel): AddressDetails{
+            return AddressDetails(0, addressModel.country.value,
+                    addressModel.city.value,
+                    addressModel.street.value,
+                    addressModel.building.value.toInt())
+        }
+    }
 }

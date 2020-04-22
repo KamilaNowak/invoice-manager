@@ -21,4 +21,14 @@ class OwnerModel : ItemViewModel<Owner>(){
     val pid =bind{
         item?.pidProperty
     }
+
+  companion object Dto{
+      fun convertOwnerModelToDto(ownerModel: OwnerModel):Owner{
+          return Owner(0, ownerModel.name.value,
+                  ownerModel.surname.value,
+                  ownerModel.email.value,
+                  ownerModel.phoneNumber.value.toLong(),
+                  ownerModel.pid.value.toInt())
+      }
+  }
 }

@@ -63,8 +63,8 @@ CREATE TABLE items(
     description VARCHAR(512) DEFAULT NULL,
     vat SMALLINT  DEFAULT NULL,
     category VARCHAR(256) DEFAULT NULL,
-    invoice_comp_no VARCHAR(256) DEFAULT NULL,
-    invoice_pers_no VARCHAR(256) DEFAULT NULL,
+    invoice_comp_no VARCHAR(128) DEFAULT NULL,
+    invoice_pers_no VARCHAR(128) DEFAULT NULL,
 
     CONSTRAINT invoice_comp_no_fkey
         FOREIGN KEY(invoice_comp_no)

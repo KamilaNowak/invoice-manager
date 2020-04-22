@@ -9,14 +9,15 @@ import javafx.beans.property.SimpleStringProperty
 import java.time.LocalDate
 import tornadofx.*;
 
-class PersonalInvoice(invoiceNo: Long,
+class PersonalInvoice(invoiceNo: String,
                       dateOfIssue: LocalDate,
                       quantity: Int,
                       amount: Long,
                       paymentMethod: PaymentMethod,
+                      discount:Int,
                       customer: Customer,
                       creator: User){
-    val invoiceNoProperty = SimpleLongProperty(invoiceNo)
+    val invoiceNoProperty = SimpleStringProperty(invoiceNo)
     var invoiceNo by invoiceNoProperty
 
     val dateOfIssueProperty = SimpleObjectProperty<LocalDate>(dateOfIssue)
@@ -30,6 +31,9 @@ class PersonalInvoice(invoiceNo: Long,
 
     val paymentMethodProperty =SimpleObjectProperty<PaymentMethod>(paymentMethod)
     var paymentMethod by paymentMethodProperty
+
+    val discountProperty = SimpleIntegerProperty(discount)
+    var discount by discountProperty
 
     val customerProperty = SimpleObjectProperty<Customer>(customer)
     var customer by customerProperty

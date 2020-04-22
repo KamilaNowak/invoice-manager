@@ -2,7 +2,6 @@ import com.nowak.demo.database.DatabaseUtils;
 import com.nowak.demo.database.UserDatabase;
 import com.nowak.demo.models.login.User;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;

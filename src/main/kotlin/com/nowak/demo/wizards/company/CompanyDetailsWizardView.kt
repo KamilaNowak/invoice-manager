@@ -1,36 +1,33 @@
-package com.nowak.demo.wizards
+package com.nowak.demo.wizards.company
 
 import com.nowak.demo.models.addresses.AddressDetails
 import com.nowak.demo.models.addresses.AddressDetailsModel
 import com.nowak.demo.models.customers.CompanyModel
 import com.nowak.demo.models.customers.Owner
 import com.nowak.demo.models.customers.OwnerModel
-import javafx.beans.binding.BooleanExpression
 import javafx.beans.property.SimpleObjectProperty
-import javafx.scene.Parent
-import sun.java2d.pipe.SpanShapeRenderer
 import tornadofx.*
 
 class CompanyDetailsWizardView : View("Owner informations") {
 
-    private val ownerModel = OwnerModel()
-    private val addressModel = AddressDetailsModel()
-    private val companyModel = CompanyModel()
-
+    private val ownerModel: OwnerModel by inject()
+    private val addressModel: AddressDetailsModel by inject()
+    private val companyModel: CompanyModel by inject()
 
     override fun onSave() {
-        companyModel.owner.value=SimpleObjectProperty<Owner>(
-                Owner(0,ownerModel.name.value, ownerModel.surname.value, ownerModel.email.value, ownerModel.phoneNumber.value.toLong(), ownerModel.pid.value.toInt())).value
-        companyModel.address.value =  SimpleObjectProperty<AddressDetails>(
-                AddressDetails(0,addressModel.country.value, addressModel.city.value, addressModel.street.value, addressModel.building.value.toInt())).value
-       //isComplete = companyModel.commit(companyModel.companyName, companyModel.nip)
+        companyModel.owner.value =
+                SimpleObjectProperty(OwnerModel.convertOwnerModelToDto(ownerModel)).value
+        companyModel.address.value =
+                SimpleObjectProperty(AddressDetailsModel.convertAddressToDto(addressModel)).value
 
-        val scope =Scope()
-        setInScope(companyModel, scope)
-        this+=find<InvoiceDetailsWizardView>(scope)
+        FX.getComponents(Scope())
+                .put(InvoiceDetailsWizardView::class, companyModel)
+
+        isComplete = companyModel.commit(companyModel.companyName)
     }
+
     override val root = vbox {
-        label("Owner details")
+        label("Company owner details")
         form {
             style { stylesheets.add("styles.css") }
             fieldset {
@@ -67,7 +64,7 @@ class CompanyDetailsWizardView : View("Owner informations") {
                 }
             }
         }
-        label("Address details")
+        label("Company address details")
         form {
             style { stylesheets.add("styles.css") }
             fieldset {
@@ -99,7 +96,7 @@ class CompanyDetailsWizardView : View("Owner informations") {
         }
         label("Company details")
         form {
-            style{ stylesheets.add("styles.css") }
+            style { stylesheets.add("styles.css") }
             fieldset {
                 field("Company name") {
                     textfield(companyModel.companyName) {
@@ -107,14 +104,13 @@ class CompanyDetailsWizardView : View("Owner informations") {
                         required()
                     }
                 }
-                field("Tax number"){
+                field("Tax number") {
                     textfield(companyModel.nip) {
-                        style {id="text-field"}
+                        style { id = "text-field" }
                         required()
                     }
                 }
             }
         }
     }
-
 }

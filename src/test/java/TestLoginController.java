@@ -1,4 +1,7 @@
+import com.itextpdf.text.DocumentException;
 import com.nowak.demo.controllers.LoginController;
+import com.nowak.demo.models.invoices.CompanyInvoice;
+import com.nowak.demo.pdf.PDFGenerator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -37,4 +40,5 @@ public class TestLoginController {
 
         Assertions.assertTrue(shouldReturnTrue);
     }
+
 }

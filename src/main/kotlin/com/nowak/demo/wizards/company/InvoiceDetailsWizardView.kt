@@ -1,12 +1,12 @@
-package com.nowak.demo.wizards
+package com.nowak.demo.wizards.company
 
+import com.nowak.demo.controllers.InvoiceController
 import com.nowak.demo.models.customers.CompanyModel
 import com.nowak.demo.models.invoices.CompanyInvoiceModel
 import com.nowak.demo.models.invoices.PaymentMethod
 import com.nowak.demo.models.items.ItemCategory
 import com.nowak.demo.models.items.ItemModel
 import javafx.collections.FXCollections
-import javafx.collections.ObservableList
 import tornadofx.*
 
 class InvoiceDetailsWizardView : View("Invoice informations") {
@@ -14,8 +14,12 @@ class InvoiceDetailsWizardView : View("Invoice informations") {
     private val companyModel: CompanyModel by inject()
     private val companyInvoiceModel: CompanyInvoiceModel by inject()
     private val itemModel: ItemModel by inject()
+    private val invoiceController: InvoiceController by inject()
+
     override fun onSave() {
-        isComplete = companyInvoiceModel.commit()
+        invoiceController.addNewCompanyInvoice(CompanyInvoiceModel
+                .convertCompanyModelToDto(companyInvoiceModel,companyModel),
+                ItemModel.convertItemModelToDto(itemModel))
     }
 
     override val root = vbox {
@@ -79,3 +83,4 @@ class InvoiceDetailsWizardView : View("Invoice informations") {
         }
     }
 }
+

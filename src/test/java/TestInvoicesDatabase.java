@@ -5,6 +5,8 @@ import com.nowak.demo.models.customers.Company;
 import com.nowak.demo.models.customers.Owner;
 import com.nowak.demo.models.invoices.CompanyInvoice;
 import com.nowak.demo.models.invoices.PaymentMethod;
+import com.nowak.demo.models.items.Item;
+import com.nowak.demo.models.items.ItemCategory;
 import com.nowak.demo.models.login.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -129,7 +131,6 @@ public class TestInvoicesDatabase {
         Company companyFromDb = invoicesDatabase.findCompanyByName("ClothingCompany");
         invoicesDatabase.deleteCompanyByName(company.getCompanyName());
 
-        System.out.println(companyFromDb.toString());
         Assertions.assertNotNull(companyFromDb);
         Assertions.assertEquals(company.getCompanyName(), companyFromDb.getCompanyName());
         Assertions.assertEquals(company.getNip(), companyFromDb.getNip());
@@ -151,9 +152,27 @@ public class TestInvoicesDatabase {
         Company company = new Company(0, "CarCompany", 1000222222, sampleAddress, sampleOwner);
         User loggedUser = userDatabase.findUserById(1);
         CompanyInvoice companyInvoice = new CompanyInvoice("INV2020419230912", LocalDate.now(), 1, 100, PaymentMethod.PAYPAL, company, loggedUser);
-
-        boolean shouldReturnTrue = invoicesDatabase.insertCompanyInvoice(companyInvoice);
+        Item item = new Item(0, "Grey Wheels", 18, ItemCategory.MATERIAL_ITEM, "");
+        boolean shouldReturnTrue = invoicesDatabase.insertCompanyInvoice(companyInvoice, item);
 
         Assertions.assertTrue(shouldReturnTrue);
+    }
+
+    @Test
+    void testInsertItem() {
+        Company company = new Company(0, "CarCompany", 1000222222, sampleAddress, sampleOwner);
+        User loggedUser = userDatabase.findUserById(1);
+        CompanyInvoice companyInvoice = new CompanyInvoice("", LocalDate.now(), 1, 100, PaymentMethod.PAYPAL, company, loggedUser);
+        Item item = new Item(0, "Grey Wheels", 18, ItemCategory.MATERIAL_ITEM, "");
+
+        boolean shouldReturnTrue = invoicesDatabase.insertCompanyInvoice(companyInvoice, item);
+
+        Assertions.assertTrue(shouldReturnTrue);
+    }
+
+    @Test
+    void testGenerateInvoiceNo() {
+        String inv = invoicesDatabase.generateInvoiceNo();
+        Assertions.assertNotNull(inv);
     }
 }

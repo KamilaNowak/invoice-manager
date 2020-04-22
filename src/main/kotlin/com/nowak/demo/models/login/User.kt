@@ -26,4 +26,5 @@ class User(id: Long, username: String, password: String, email: String, birthDat
     override fun toString(): String {
         return "User (${id},${username},${password},${email},${birthDate},${createdAt})\n"
     }
+
 }

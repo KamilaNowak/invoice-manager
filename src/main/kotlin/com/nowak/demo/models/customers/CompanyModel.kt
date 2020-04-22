@@ -1,5 +1,8 @@
 package com.nowak.demo.models.customers
 
+import com.nowak.demo.database.getLoggedUser
+import com.nowak.demo.models.invoices.CompanyInvoice
+import com.nowak.demo.models.invoices.CompanyInvoiceModel
 import tornadofx.*
 
 class CompanyModel :ItemViewModel<Company>(){

@@ -2,20 +2,27 @@ package com.nowak.demo.database
 
 import com.nowak.demo.models.addresses.AddressDetails
 import com.nowak.demo.models.customers.Company
+import com.nowak.demo.models.customers.Customer
 import com.nowak.demo.models.customers.Owner
 import com.nowak.demo.models.invoices.CompanyInvoice
+import com.nowak.demo.models.invoices.PersonalInvoice
 import com.nowak.demo.models.items.Item
 import com.nowak.demo.models.items.ReceiverType
 import java.sql.ResultSet
 import java.sql.SQLException
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
 import javax.sound.midi.Receiver
 
 class InvoicesDatabase {
 
     private lateinit var resultSet: ResultSet
 
-    fun insertCompanyInvoice(companyInvoice: CompanyInvoice): Boolean {
-        val params = linkedMapOf(1 to companyInvoice.invoiceNo, 2 to convertToDate(companyInvoice.dateOfIssue), 3 to companyInvoice.quantity, 4 to companyInvoice.amount,
+    fun insertCompanyInvoice(companyInvoice: CompanyInvoice, item: Item): Boolean {
+
+        val invoiceNo = generateInvoiceNo()
+        val params = linkedMapOf(1 to invoiceNo, 2 to convertToDate(companyInvoice.dateOfIssue), 3 to companyInvoice.quantity, 4 to companyInvoice.amount,
                 5 to companyInvoice.paymentMethod.toString(), 6 to companyInvoice.creator.id)
         var rowsAffected = 0
         try {
@@ -25,15 +32,19 @@ class InvoicesDatabase {
             else {
                 insertCompany(companyInvoice.company)
                 val companyToInsert = findCompanyByName(companyInvoice.company.companyName)
-                println("Company id: " + companyToInsert.toString())
                 params[7] = companyToInsert!!.id
             }
             rowsAffected = DatabaseQueryUtils.createUpdateTypeQuery("INSERT INTO company_invoices(invoice_no, date_of_issue, quantity, amount, payment_option, prepared_by, company_id) VALUES(?,?,?,?,?,?,?)", params)
+            insertItem(item, invoiceNo, ReceiverType.COMPANY)
             if (rowsAffected > 0) return true
             return false
         } catch (e: Exception) {
             throw SQLException("Cannot extract data: Cause: ${e.cause} ; Message: ${e.message}")
         }
+    }
+
+    fun insertPersonalInvoice(personalInvoice: PersonalInvoice, item: Item) {
+        TODO("Not yet implemented")
     }
 
     fun insertCompany(company: Company): Boolean {
@@ -102,6 +113,21 @@ class InvoicesDatabase {
         } catch (e: Exception) {
             throw SQLException("Cannot extract data: Cause: ${e.cause} ; Message: ${e.message}")
         }
+    }
+
+    fun insertCustomer(customer: Customer): Int {
+        try {
+            val isExistingCustomer = findCustomerByEmail(customer.email)
+            if (isExistingCustomer != null) return isExistingCustomer.id.toInt()
+            val params = mapOf(1 to customer.name, 2 to customer.surname, 3 to customer.email, 4 to customer.phoneNumber, 5 to customer.address.id)
+            return DatabaseQueryUtils.createUpdateTypeQuery("INSERT INTO customers(name, surname, email, phone_number, address_id) VALUES(?,?,?,?,?)", params)
+        } catch (e: Exception) {
+            throw SQLException("Cannot extract data: Cause: ${e.cause} ; Message: ${e.message}")
+        }
+    }
+
+    fun findCustomerByEmail(email: String): Customer? {
+        TODO()
     }
 
     fun insertAddressDetails(address: AddressDetails): Int {
@@ -188,22 +214,20 @@ class InvoicesDatabase {
         var rowsAffected = 0
         val params = linkedMapOf(1 to item.description, 2 to item.vat, 3 to item.category.toString())
         try {
-            if(receiver == ReceiverType.COMPANY) {
+            if (receiver == ReceiverType.COMPANY) {
                 params[4] = invoiceNo
                 params[5] = null
+            } else if (receiver == ReceiverType.PERSON) {
+                params[4] = null
+                params[5] = invoiceNo
             }
-            else if(receiver==ReceiverType.PERSON){
-                params[4] =null
-                params[5]=invoiceNo
-            }
-            rowsAffected = DatabaseQueryUtils.createUpdateTypeQuery("INSERT INTO items(description, vat,category, invoice_comp_no, invoice_pers_no) VALUES(?,?,?,?,?)",params)
+            rowsAffected = DatabaseQueryUtils.createUpdateTypeQuery("INSERT INTO items(description, vat, category, invoice_comp_no, invoice_pers_no) VALUES(?,?,?,?,?)", params)
             if (rowsAffected > 0) return true
             return false
         } catch (e: Exception) {
             throw SQLException("Cannot extract data: Cause: ${e.cause} ; Message: ${e.message}")
         }
     }
-
 
     private fun getOwnerFromResultSet(resultSet: ResultSet): Owner {
         return Owner(resultSet.getInt("id").toLong(),
@@ -228,6 +252,12 @@ class InvoicesDatabase {
                 resultSet.getLong("nip"),
                 findAddressDetailsById(resultSet.getInt("address_id"))!!,
                 findOwnerById(resultSet.getInt("owner_id").toLong())!!)
+    }
+
+    fun generateInvoiceNo(): String {
+        val prefix = " INV"
+        val date = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+        return prefix + date.toString()
     }
 
 }
