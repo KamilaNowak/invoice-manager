@@ -63,17 +63,17 @@ CREATE TABLE items(
     description VARCHAR(512) DEFAULT NULL,
     vat SMALLINT  DEFAULT NULL,
     category VARCHAR(256) DEFAULT NULL,
-    invoice_comp_no VARCHAR(128) DEFAULT NULL,
-    invoice_pers_no VARCHAR(128) DEFAULT NULL,
+    invoice_company_no VARCHAR(128) DEFAULT NULL,
+    invoice_personal_no VARCHAR(128) DEFAULT NULL,
 
     CONSTRAINT invoice_comp_no_fkey
-        FOREIGN KEY(invoice_comp_no)
+        FOREIGN KEY(invoice_company_no)
             REFERENCES company_invoices(invoice_no)
                 ON DELETE NO ACTION
                     ON UPDATE NO ACTION,
 
     CONSTRAINT invoice_pers_no_fkey
-        FOREIGN KEY(invoice_pers_no)
+        FOREIGN KEY(invoice_personal_no)
             REFERENCES personal_invoices(invoice_no)
                 ON DELETE NO ACTION
                     ON UPDATE NO ACTION
@@ -120,4 +120,22 @@ CREATE TABLE personal_invoices(
             REFERENCES users(id)
                  ON DELETE NO ACTION
                     ON UPDATE NO ACTION
+)
+CREATE TABLE invoices_links(
+    id BIGSERIAL NOT NULL PRIMARY KEY,
+    pdf_link VARCHAR(1024) DEFAULT NULL,
+    invoice_company_no VARCHAR(128) DEFAULT NULL,
+    invoice_personal_no VARCHAR(128) DEFAULT NULL,
+
+    CONSTRAINT company_link_fkey
+        FOREIGN KEY (invoice_company_no)
+            REFERENCES company_invoices(invoice_no)
+                ON DELETE CASCADE
+                    ON UPDATE CASCADE ,
+
+      CONSTRAINT personal_link_fkey
+        FOREIGN KEY (invoice_personal_no)
+            REFERENCES personal_invoices(invoice_no)
+                ON DELETE CASCADE
+                    ON UPDATE CASCADE
 )

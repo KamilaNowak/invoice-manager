@@ -171,8 +171,14 @@ public class TestInvoicesDatabase {
     }
 
     @Test
+    void testGetCompanyInvoiceSummary(){
+    //TODO
+    }
+
+    @Test
     void testGenerateInvoiceNo() {
         String inv = invoicesDatabase.generateInvoiceNo();
         Assertions.assertNotNull(inv);
     }
+
 }

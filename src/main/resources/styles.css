@@ -78,11 +78,13 @@
 }
 
 #second-scene-bg {
-    -fx-background-color: linear-gradient(to right top, #fff1eb 0%, #eec2c2 100%);
+    -fx-background-color: linear-gradient(to right top, #fff1eb 0%, #caeef6 100%);
 }
 
 #third-scene-bg {
-    -fx-background-color: linear-gradient(to right top, #fff1eb 0%, #ded2bf 100%);
+    -fx-background-color: linear-gradient(to right top, #fff1eb 0%, #caeef6 100%);
+    -fx-spacing: 15.0;
+    -fx-padding: 15.0;
 }
 
 #modal {
@@ -97,9 +99,13 @@
 #status-label {
     -fx-text-fill: green;
     -fx-font-size: 20.0;
-    -fx-font-weight: normal;
+    -fx-font-weight: bold;
 }
 
 #password-label {
     -fx-opacity: 0.3;
+}
+#vbox-organized{
+    -fx-spacing: 15.0;
+    -fx-padding: 15.0;
 }

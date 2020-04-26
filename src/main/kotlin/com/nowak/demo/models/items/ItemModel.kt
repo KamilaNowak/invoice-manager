@@ -8,7 +8,6 @@ class ItemModel : ItemViewModel<Item>() {
     val description = bind { item?.descriptionProperty }
     val vat = bind{item?.vatProperty}
     val category = bind{ item?.categoryProperty}
-    val invoiceNo = bind{item?.invoiceNoProperty}
 
     companion object Dto{
         fun convertItemModelToDto(itemModel: ItemModel):Item{
