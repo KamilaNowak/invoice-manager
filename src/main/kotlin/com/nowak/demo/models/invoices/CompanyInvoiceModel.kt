@@ -9,7 +9,6 @@ class CompanyInvoiceModel : ItemViewModel<CompanyInvoice>() {
 
     val invoiceNo = bind { item?.invoiceNoProperty }
     val dateOfIssue = bind { item?.dateOfIssueProperty }
-    val quantity = bind { item?.quantityProperty }
     val amount = bind { item?.amountProperty }
     val paymentMethod = bind { item?.paymentMethodProperty }
     val company = bind { item?.companyProperty }
@@ -19,7 +18,6 @@ class CompanyInvoiceModel : ItemViewModel<CompanyInvoice>() {
         fun convertCompanyModelToDto(companyInvoiceModel: CompanyInvoiceModel, companyModel: CompanyModel): CompanyInvoice{
             return CompanyInvoice("",
                     companyInvoiceModel.dateOfIssue.value,
-                    companyInvoiceModel.quantity.value.toInt(),
                     companyInvoiceModel.amount.value.toLong(),
                     companyInvoiceModel.paymentMethod.value,
                     Company(0,companyModel.companyName.value,

@@ -30,6 +30,8 @@ class AddressDetails(id: Long,
     override fun toString(): String {
         return "$idProperty, $countryProperty, $cityProperty,$streetProperty, $buildingProperty)"
     }
-
+    public fun showAddress(): String {
+        return country+", "+city+", "+street+"  "+building.toString()
+    }
 
 }

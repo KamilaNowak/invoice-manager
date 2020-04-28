@@ -22,16 +22,19 @@ class InvoicesShowcaseController : Controller() {
     }
 
     fun getCompanyInvoiceSummary(): ObservableList<InvoiceSummaryModel> {
-
         val list: ArrayList<InvoiceSummaryModel> = arrayListOf()
         val items = invoicesDatabase.getCompanyInvoiceSummary()
 
-        val items2 = invoicesDatabase.getPersonalInvoiceSummary()
         items.forEach {
             list.add(InvoiceSummaryModel().apply {
                 item = it
             })
         }
+        return list.observable()
+    }
+    fun getPersonalInvoiceSummary(): ObservableList<InvoiceSummaryModel> {
+        val list: ArrayList<InvoiceSummaryModel> = arrayListOf()
+        val items2 = invoicesDatabase.getPersonalInvoiceSummary()
         items2.forEach {
             list.add(InvoiceSummaryModel().apply {
                 item = it

@@ -61,6 +61,8 @@ CREATE TABLE address_details(
 CREATE TABLE items(
     id BIGSERIAL NOT NULL PRIMARY KEY,
     description VARCHAR(512) DEFAULT NULL,
+    cost BIGINT DEFAULT NULL,
+    quantity BIGINT DEFAULT NULL,
     vat SMALLINT  DEFAULT NULL,
     category VARCHAR(256) DEFAULT NULL,
     invoice_company_no VARCHAR(128) DEFAULT NULL,
@@ -81,7 +83,6 @@ CREATE TABLE items(
 CREATE TABLE company_invoices(
     invoice_no VARCHAR(128) NOT NULL PRIMARY KEY,
     date_of_issue timestamp DEFAULT CURRENT_TIMESTAMP,
-    quantity BIGINT DEFAULT NULL,
     amount BIGINT DEFAULT NULL,
     payment_option VARCHAR(64) DEFAULT NULL,
     prepared_by INTEGER DEFAULT NULL,
@@ -102,7 +103,6 @@ CREATE TABLE company_invoices(
 CREATE TABLE personal_invoices(
     invoice_no VARCHAR(128) NOT NULL PRIMARY KEY,
     date_of_issue timestamp DEFAULT CURRENT_TIMESTAMP,
-    quantity INTEGER DEFAULT NULL,
     amount BIGINT DEFAULT NULL,
     payment_option VARCHAR(64) DEFAULT NULL,
     discount SMALLINT DEFAULT NULL,

@@ -33,4 +33,8 @@ class Customer(id: Long,
     override fun toString(): String {
         return "CustomerModel(idProperty=$idProperty, nameProperty=$nameProperty, surnameProperty=$surnameProperty, emailProperty=$emailProperty, phoneNumberProperty=$phoneNumberProperty, addressProperty=$addressProperty)"
     }
+
+    fun showCustomer(): String{
+        return name+" "+ surname+"\n"+ email+"\n"+ phoneNumber
+    }
 }

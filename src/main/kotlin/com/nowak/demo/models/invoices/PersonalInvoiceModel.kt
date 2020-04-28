@@ -9,7 +9,6 @@ class PersonalInvoiceModel : ItemViewModel<PersonalInvoice>() {
 
     val invoiceNo = bind { item?.invoiceNoProperty }
     val dateOfIssue = bind { item?.dateOfIssueProperty }
-    val quantity = bind { item?.quantityProperty }
     val amount = bind { item?.amountProperty }
     val paymentMethod = bind { item?.paymentMethodProperty }
     val discount = bind { item?.discountProperty }
@@ -19,7 +18,6 @@ class PersonalInvoiceModel : ItemViewModel<PersonalInvoice>() {
     companion object Dto {
         fun convertPersonalInvoiceModelToDto(personalInvoiceModel: PersonalInvoiceModel, customerModel: CustomerModel): PersonalInvoice {
             return PersonalInvoice("", personalInvoiceModel.dateOfIssue.value,
-                    personalInvoiceModel.quantity.value.toInt(),
                     personalInvoiceModel.amount.value.toLong(),
                     personalInvoiceModel.paymentMethod.value,
                     personalInvoiceModel.discount.value.toInt(),

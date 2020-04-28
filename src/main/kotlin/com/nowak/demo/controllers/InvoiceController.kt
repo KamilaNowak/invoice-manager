@@ -2,11 +2,11 @@ package com.nowak.demo.controllers
 
 import com.nowak.demo.database.InvoicesDatabase
 import com.nowak.demo.models.invoices.CompanyInvoice
-import com.nowak.demo.models.invoices.CompanyInvoiceModel
 import com.nowak.demo.models.invoices.PersonalInvoice
 import com.nowak.demo.models.items.Item
 import com.nowak.demo.wizards.company.CompanyInvoiceWizard
 import com.nowak.demo.wizards.personal.PersonalInvoiceWizard
+import javafx.collections.ObservableList
 import tornadofx.*
 
 class InvoiceController : Controller() {
@@ -26,10 +26,10 @@ class InvoiceController : Controller() {
             openModal()
         }
     }
-    fun addNewCompanyInvoice(companyInvoice: CompanyInvoice, item: Item) {
-        invoicesDatabase.insertCompanyInvoice(companyInvoice, item)
+    fun addNewCompanyInvoice(companyInvoice: CompanyInvoice, items: ObservableList<Item>) {
+        invoicesDatabase.insertCompanyInvoice(companyInvoice, items)
     }
-    fun addNewPersonalInvoice(personalInvoice: PersonalInvoice, item: Item){
-        invoicesDatabase.insertPersonalInvoice(personalInvoice, item)
+    fun addNewPersonalInvoice(personalInvoice: PersonalInvoice, items: ObservableList<Item>){
+        invoicesDatabase.insertPersonalInvoice(personalInvoice, items)
     }
 }

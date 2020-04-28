@@ -7,10 +7,12 @@ import com.nowak.demo.models.customers.Owner
 import com.nowak.demo.models.invoices.CompanyInvoice
 import com.nowak.demo.models.invoices.PersonalInvoice
 import com.nowak.demo.models.items.Item
+import com.nowak.demo.models.items.ItemCategory
 import com.nowak.demo.models.items.ReceiverType
 import com.nowak.demo.models.summary.InvoiceSummary
 import javafx.beans.property.SimpleObjectProperty
 import javafx.collections.FXCollections
+import javafx.collections.ObservableList
 import tornadofx.*
 import java.sql.ResultSet
 import java.sql.SQLException
@@ -33,25 +35,31 @@ class InvoicesDatabase {
                         "LEFT OUTER JOIN invoices_links ON invoices_links.invoice_company_no = company_invoices.invoice_no " +
                         "ORDER BY date_of_issue DESC", emptyMap())
         if (resultSet.next()) {
-            do { list.add(getSummaryFromResultSet(resultSet)) } while (resultSet.next()) }
+            do {
+                list.add(getSummaryFromResultSet(resultSet))
+            } while (resultSet.next())
+        }
         return list
     }
-    fun getPersonalInvoiceSummary(): ArrayList<InvoiceSummary>{
+
+    fun getPersonalInvoiceSummary(): ArrayList<InvoiceSummary> {
         val list: ArrayList<InvoiceSummary> = arrayListOf()
-        resultSet= DatabaseQueryUtils
+        resultSet = DatabaseQueryUtils
                 .createQuery("SELECT invoice_no, date_of_issue, amount, CONCAT( customers.name, ' ', customers.surname) AS receiver, invoices_links.pdf_link " +
                         "FROM personal_invoices " +
                         "JOIN customers ON personal_invoices.customer_id=customers.id " +
                         "LEFT OUTER JOIN invoices_links ON invoices_links.invoice_personal_no = personal_invoices.invoice_no " +
                         "ORDER BY date_of_issue DESC", emptyMap())
         if (resultSet.next())
-            do { list.add(getSummaryFromResultSet(resultSet)) } while (resultSet.next())
+            do {
+                list.add(getSummaryFromResultSet(resultSet))
+            } while (resultSet.next())
         return list
     }
 
-    fun insertPDFlink(link: String, invoiceNo: String, receiver: ReceiverType): Boolean{
-        var rowsAff =0
-        val params = linkedMapOf(1 to link,2 to null)
+    fun insertPDFlink(link: String, invoiceNo: String, receiver: ReceiverType): Boolean {
+        var rowsAff = 0
+        val params = linkedMapOf(1 to link, 2 to null)
         try {
             if (receiver == ReceiverType.PERSON) {
                 params[2] = null
@@ -61,32 +69,35 @@ class InvoicesDatabase {
                 params[3] = null
             }
             rowsAff = DatabaseQueryUtils
-                    .createUpdateTypeQuery("INSERT INTO invoices_links(pdf_link, invoice_company_no, invoice_personal_no) VALUES(?,?,?)",params)
-            if(rowsAff>0)return true
+                    .createUpdateTypeQuery("INSERT INTO invoices_links(pdf_link, invoice_company_no, invoice_personal_no) VALUES(?,?,?)", params)
+            if (rowsAff > 0) return true
             return false
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             throw SQLException("Cannot extract data: Cause: ${e.cause} ; Message: ${e.message}")
         }
     }
 
-    fun insertCompanyInvoice(companyInvoice: CompanyInvoice, item: Item): Boolean {
+    fun insertCompanyInvoice(companyInvoice: CompanyInvoice, items: ObservableList<Item>): Boolean {
 
         val invoiceNo = generateInvoiceNo()
-        val params = linkedMapOf(1 to invoiceNo, 2 to convertToDate(companyInvoice.dateOfIssue), 3 to companyInvoice.quantity, 4 to companyInvoice.amount,
-                5 to companyInvoice.paymentMethod.toString(), 6 to companyInvoice.creator.id)
+        val params = linkedMapOf(1 to invoiceNo, 2 to convertToDate(companyInvoice.dateOfIssue), 3 to companyInvoice.amount,
+                4 to companyInvoice.paymentMethod.toString(), 5 to companyInvoice.creator.id)
         var rowsAffected = 0
         try {
             val isCompanyExisting = findCompanyByName(companyInvoice.company.companyName)
             if (isCompanyExisting != null)
-                params[7] = isCompanyExisting.id
+                params[6] = isCompanyExisting.id
             else {
                 insertCompany(companyInvoice.company)
                 val companyToInsert = findCompanyByName(companyInvoice.company.companyName)
-                params[7] = companyToInsert!!.id
+                params[6] = companyToInsert!!.id
             }
-            rowsAffected = DatabaseQueryUtils.createUpdateTypeQuery("INSERT INTO company_invoices(invoice_no, date_of_issue, quantity, amount, payment_option, prepared_by, company_id) VALUES(?,?,?,?,?,?,?)", params)
-            insertItem(item, invoiceNo, ReceiverType.COMPANY)
-            insertPDFlink("Goodle.com",invoiceNo, ReceiverType.COMPANY)
+            rowsAffected = DatabaseQueryUtils.createUpdateTypeQuery("INSERT INTO company_invoices(invoice_no, date_of_issue, amount, payment_option, prepared_by, company_id) VALUES(?,?,?,?,?,?)", params)
+
+            for (item in items) {
+                insertItem(item, invoiceNo, ReceiverType.COMPANY)
+            }
+            insertPDFlink("Goodle.com", invoiceNo, ReceiverType.COMPANY)
             if (rowsAffected > 0) return true
             return false
         } catch (e: Exception) {
@@ -94,22 +105,24 @@ class InvoicesDatabase {
         }
     }
 
-    fun insertPersonalInvoice(personalInvoice: PersonalInvoice, item: Item): Boolean {
+    fun insertPersonalInvoice(personalInvoice: PersonalInvoice, items: ObservableList<Item>): Boolean {
         val invoiceNo = generateInvoiceNo()
-        val params = linkedMapOf(1 to invoiceNo, 2 to convertToDate(personalInvoice.dateOfIssue), 3 to personalInvoice.quantity, 4 to personalInvoice.amount, 5 to personalInvoice.paymentMethod.toString(), 6 to personalInvoice.discount)
+        val params = linkedMapOf(1 to invoiceNo, 2 to convertToDate(personalInvoice.dateOfIssue), 3 to personalInvoice.amount, 4 to personalInvoice.paymentMethod.toString(), 5 to personalInvoice.discount)
         var rowsAffected = 0
         try {
             val isCustomerExisting = findCustomerByEmail(personalInvoice.customer.email)
             if (isCustomerExisting != null) {
-                params[7] = isCustomerExisting.id
+                params[6] = isCustomerExisting.id
             } else {
                 insertCustomer(personalInvoice.customer)
                 val insertedCustomer = findCustomerByEmail(personalInvoice.customer.email)
-                params[7] = insertedCustomer!!.id
+                params[6] = insertedCustomer!!.id
             }
-            params[8] = getLoggedUser().id
-            rowsAffected = DatabaseQueryUtils.createUpdateTypeQuery("INSERT INTO personal_invoices(invoice_no, date_of_issue, quantity, amount, payment_option, discount, customer_id, prepared_by) VALUES(?,?,?,?,?,?,?,?)", params)
-            insertItem(item, invoiceNo, ReceiverType.PERSON)
+            params[7] = getLoggedUser().id
+            rowsAffected = DatabaseQueryUtils.createUpdateTypeQuery("INSERT INTO personal_invoices(invoice_no, date_of_issue, amount, payment_option, discount, customer_id, prepared_by) VALUES(?,?,?,?,?,?,?)", params)
+            for (item in items) {
+                insertItem(item, invoiceNo, ReceiverType.PERSON)
+            }
             if (rowsAffected > 0) return true
             return false
         } catch (e: Exception) {
@@ -300,21 +313,37 @@ class InvoicesDatabase {
 
     fun insertItem(item: Item, invoiceNo: String, receiver: ReceiverType): Boolean {
         var rowsAffected = 0
-        val params = linkedMapOf(1 to item.description, 2 to item.vat, 3 to item.category.toString())
+        val params = linkedMapOf(1 to item.description, 2 to item.cost, 3 to item.quantity, 4 to item.vat, 5 to item.category.toString())
         try {
             if (receiver == ReceiverType.COMPANY) {
-                params[4] = invoiceNo
-                params[5] = null
+                params[6] = invoiceNo
+                params[7] = null
             } else if (receiver == ReceiverType.PERSON) {
-                params[4] = null
-                params[5] = invoiceNo
+                params[6] = null
+                params[7] = invoiceNo
             }
-            rowsAffected = DatabaseQueryUtils.createUpdateTypeQuery("INSERT INTO items(description, vat, category, invoice_company_no, invoice_personal_no) VALUES(?,?,?,?,?)", params)
+            rowsAffected = DatabaseQueryUtils.createUpdateTypeQuery("INSERT INTO items(description, cost, quantity, vat, category, invoice_company_no, invoice_personal_no) VALUES(?,?,?,?,?,?,?)", params)
             if (rowsAffected > 0) return true
             return false
         } catch (e: Exception) {
             throw SQLException("Cannot extract data: Cause: ${e.cause} ; Message: ${e.message}")
         }
+    }
+
+    fun findItemsByInvoiceNo(invoiceNo: String, receiver: ReceiverType): ArrayList<Item> {
+        val items = ArrayList<Item>()
+        val params = mapOf(1 to invoiceNo)
+        resultSet = if(receiver== ReceiverType.COMPANY) {
+            DatabaseQueryUtils
+                    .createQuery("SELECT id, description, cost, quantity, vat, category, invoice_company_no AS invoice_no FROM items WHERE invoice_company_no= ?",params)
+        }
+        else DatabaseQueryUtils
+                .createQuery("SELECT id, description, cost, quantity, vat, category, invoice_personal_no AS invoice_no FROM items WHERE invoice_personal_no= ?",params)
+        if(resultSet.next()){
+            do{ items.add(getItemFroResultSet(resultSet))
+            }while(resultSet.next())
+        }
+        return items
     }
 
     private fun getOwnerFromResultSet(resultSet: ResultSet): Owner {
@@ -351,8 +380,19 @@ class InvoicesDatabase {
                 findAddressDetailsById(resultSet.getInt("address_id"))!!)
     }
 
+    private fun getItemFroResultSet(resultSet: ResultSet): Item {
+
+        return Item(resultSet.getLong("id"),
+                resultSet.getString("description"),
+                resultSet.getLong("cost"),
+                resultSet.getLong("quantity"),
+                resultSet.getInt("vat"),
+                ItemCategory.valueOf((resultSet.getString("category"))),
+                resultSet.getString("invoice_no"))
+    }
+
     fun generateInvoiceNo(): String {
-        val prefix = " INV"
+        val prefix = "INV"
         val date = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
         return prefix + date.toString()
     }

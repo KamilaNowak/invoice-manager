@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleLongProperty
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
 import tornadofx.*;
-class Item(id: Long, description:String, vat: Int, category: ItemCategory, invoiceNo: String) {
+class Item(id: Long, description:String, cost: Long, quantity: Long,  vat: Int, category: ItemCategory, invoiceNo: String) {
 
     val idProperty = SimpleLongProperty(id)
     var id by idProperty
@@ -15,6 +15,12 @@ class Item(id: Long, description:String, vat: Int, category: ItemCategory, invoi
 
     val descriptionProperty = SimpleStringProperty(description)
     var description by descriptionProperty
+
+    val costProperty = SimpleLongProperty(cost)
+    var cost by costProperty
+
+    val quantityProperty = SimpleLongProperty(quantity)
+    var quantity by quantityProperty
 
     val categoryProperty = SimpleObjectProperty<ItemCategory>(category)
     var category by categoryProperty

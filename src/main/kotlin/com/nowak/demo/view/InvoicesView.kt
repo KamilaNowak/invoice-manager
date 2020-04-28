@@ -26,6 +26,7 @@ class InvoicesView : View("Invoices") {
                 action { invoiceController.openAddPersonalInvoiceWizard() }
             }
         }
+        label("Company Invoices")
         tableview<InvoiceSummaryModel> {
             items = invoicesShowcaseController.getCompanyInvoiceSummary()
             columnResizePolicy = SmartResize.POLICY
@@ -37,6 +38,17 @@ class InvoicesView : View("Invoices") {
             column("Document", InvoiceSummaryModel::link)
 
         }
+        label("Personal Clients Invoices")
+        tableview<InvoiceSummaryModel> {
+            items = invoicesShowcaseController.getPersonalInvoiceSummary()
+            columnResizePolicy = SmartResize.POLICY
 
+            column("Invoice number", InvoiceSummaryModel::invoiceNo)
+            column("Date", InvoiceSummaryModel::dateOfIssue)
+            column("Amount", InvoiceSummaryModel::amount)
+            column("Receiver", InvoiceSummaryModel::receiver)
+            column("Document", InvoiceSummaryModel::link)
+
+        }
     }
 }

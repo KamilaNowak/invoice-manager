@@ -7,7 +7,10 @@ import com.nowak.demo.models.invoices.CompanyInvoice;
 import com.nowak.demo.models.invoices.PaymentMethod;
 import com.nowak.demo.models.items.Item;
 import com.nowak.demo.models.items.ItemCategory;
+import com.nowak.demo.models.items.ReceiverType;
 import com.nowak.demo.models.login.User;
+import com.nowak.demo.pdf.PDFGenerator;
+import javafx.collections.ObservableList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +18,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnJre;
 import org.junit.jupiter.api.condition.JRE;
 
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @EnabledOnJre(JRE.JAVA_8)
 @DisplayName("Invoices database Controller tests")
@@ -151,9 +158,9 @@ public class TestInvoicesDatabase {
     void testInsertCompanyInvoice() {
         Company company = new Company(0, "CarCompany", 1000222222, sampleAddress, sampleOwner);
         User loggedUser = userDatabase.findUserById(1);
-        CompanyInvoice companyInvoice = new CompanyInvoice("INV2020419230912", LocalDate.now(), 1, 100, PaymentMethod.PAYPAL, company, loggedUser);
-        Item item = new Item(0, "Grey Wheels", 18, ItemCategory.MATERIAL_ITEM, "");
-        boolean shouldReturnTrue = invoicesDatabase.insertCompanyInvoice(companyInvoice, item);
+        CompanyInvoice companyInvoice = new CompanyInvoice("INV2020419230912", LocalDate.now(), 1, PaymentMethod.PAYPAL, company, loggedUser);
+        Item item = new Item(0, "Grey Wheels", 1223, 1, 18, ItemCategory.MATERIAL_ITEM, "");
+        boolean shouldReturnTrue = invoicesDatabase.insertCompanyInvoice(companyInvoice, (ObservableList<Item>) new ArrayList(Collections.singleton(item)));
 
         Assertions.assertTrue(shouldReturnTrue);
     }
@@ -162,17 +169,22 @@ public class TestInvoicesDatabase {
     void testInsertItem() {
         Company company = new Company(0, "CarCompany", 1000222222, sampleAddress, sampleOwner);
         User loggedUser = userDatabase.findUserById(1);
-        CompanyInvoice companyInvoice = new CompanyInvoice("", LocalDate.now(), 1, 100, PaymentMethod.PAYPAL, company, loggedUser);
-        Item item = new Item(0, "Grey Wheels", 18, ItemCategory.MATERIAL_ITEM, "");
-
-        boolean shouldReturnTrue = invoicesDatabase.insertCompanyInvoice(companyInvoice, item);
+        CompanyInvoice companyInvoice = new CompanyInvoice("", LocalDate.now(), 1, PaymentMethod.PAYPAL, company, loggedUser);
+        Item item = new Item(0, "Grey Wheels", 1223, 1, 18, ItemCategory.MATERIAL_ITEM, "");
+        boolean shouldReturnTrue = invoicesDatabase.insertCompanyInvoice(companyInvoice, (ObservableList<Item>) new ArrayList(Collections.singleton(item)));
 
         Assertions.assertTrue(shouldReturnTrue);
     }
 
     @Test
-    void testGetCompanyInvoiceSummary(){
-    //TODO
+    void testFindItemsByInvoiceNo() {
+        //TODO
+        System.out.println(invoicesDatabase.findItemsByInvoiceNo(" INV1588070475890", ReceiverType.COMPANY));
+    }
+
+    @Test
+    void testGetCompanyInvoiceSummary() {
+        //TODO
     }
 
     @Test
@@ -181,4 +193,12 @@ public class TestInvoicesDatabase {
         Assertions.assertNotNull(inv);
     }
 
+    @Test
+    void pdf() throws IOException {
+        Company company = new Company(0, "CarCompany", 1000222222, sampleAddress, sampleOwner);
+        User loggedUser = userDatabase.findUserById(1);
+        CompanyInvoice companyInvoice = new CompanyInvoice("INV1588070475890", LocalDate.now(), 1, PaymentMethod.PAYPAL, company, loggedUser);
+        ArrayList<Item> items = invoicesDatabase.findItemsByInvoiceNo(" INV1588070475890", ReceiverType.COMPANY);
+        PDFGenerator.generatePDFCompanyInvoice(companyInvoice, items);
+    }
 }

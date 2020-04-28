@@ -30,6 +30,12 @@ class Company(id: Long =0,
     override fun toString(): String {
         return "Company($idProperty, $companyNameProperty, $nipProperty, $addressProperty, $ownerProperty)"
     }
+    public fun showAddress():String{
+        return address.country+", "+ address.city+", "+ address.street+", "+address.building.toString()
+    }
+    public fun showOwner(): String{
+        return owner.name+" "+ owner.surname+"\nE-mail: "+owner.email+"\nPhone: "+owner.phoneNumber+"\nPID: "+owner.pid
+    }
 
 
 }

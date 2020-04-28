@@ -11,7 +11,6 @@ import tornadofx.*;
 
 class PersonalInvoice(invoiceNo: String,
                       dateOfIssue: LocalDate,
-                      quantity: Int,
                       amount: Long,
                       paymentMethod: PaymentMethod,
                       discount:Int,
@@ -22,9 +21,6 @@ class PersonalInvoice(invoiceNo: String,
 
     val dateOfIssueProperty = SimpleObjectProperty<LocalDate>(dateOfIssue)
     var dateOfIssue by dateOfIssueProperty
-
-    val quantityProperty = SimpleIntegerProperty(quantity)
-    var quantity by quantityProperty
 
     val amountProperty = SimpleLongProperty(amount)
     var amount by amountProperty

@@ -11,7 +11,6 @@ import java.time.LocalDate
 
 class CompanyInvoice(invoiceNo: String,
                      dateOfIssue: LocalDate,
-                     quantity: Int,
                      amount: Long,
                      paymentMethod: PaymentMethod,
                      company: Company,
@@ -21,9 +20,6 @@ class CompanyInvoice(invoiceNo: String,
 
     val dateOfIssueProperty = SimpleObjectProperty<LocalDate>(dateOfIssue)
     var dateOfIssue by dateOfIssueProperty
-
-    val quantityProperty = SimpleIntegerProperty(quantity)
-    var quantity by quantityProperty
 
     val amountProperty = SimpleLongProperty(amount)
     var amount by amountProperty
