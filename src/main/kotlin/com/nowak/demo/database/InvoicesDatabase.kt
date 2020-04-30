@@ -1,5 +1,6 @@
 package com.nowak.demo.database
 
+import com.nowak.demo.aws.S3Uploader
 import com.nowak.demo.models.addresses.AddressDetails
 import com.nowak.demo.models.customers.Company
 import com.nowak.demo.models.customers.Customer
@@ -7,24 +8,42 @@ import com.nowak.demo.models.customers.Owner
 import com.nowak.demo.models.invoices.CompanyInvoice
 import com.nowak.demo.models.invoices.PersonalInvoice
 import com.nowak.demo.models.items.Item
-import com.nowak.demo.models.items.ItemCategory
 import com.nowak.demo.models.items.ReceiverType
 import com.nowak.demo.models.summary.InvoiceSummary
+import com.nowak.demo.pdf.PDFGenerator
 import javafx.beans.property.SimpleObjectProperty
-import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import tornadofx.*
 import java.sql.ResultSet
 import java.sql.SQLException
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.ZoneId
+import java.util.stream.Collectors
 
 class InvoicesDatabase {
 
-    val resultSetProperty = SimpleObjectProperty<ResultSet>()
-    var resultSet by resultSetProperty
+    private val resultSetProperty = SimpleObjectProperty<ResultSet>()
+    private var resultSet by resultSetProperty
+    private val s3 = S3Uploader()
 
+    fun getEmailByInvoiceNo(invoiceNo: String, receiver: ReceiverType): String? {
+        val params = mapOf(1 to invoiceNo)
+        var query: String = ""
+        try {
+            query = if (receiver == ReceiverType.COMPANY)
+                "SELECT email FROM owners " +
+                        "JOIN companies ON owners.id = companies.owner_id " +
+                        "JOIN company_invoices ON company_invoices.company_id = companies.id WHERE company_invoices.invoice_no= ?"
+            else
+                "SELECT email FROM customers JOIN personal_invoices ON personal_invoices.customer_id= customers.id WHERE invoice_no= ?"
+            resultSet = DatabaseQueryUtils
+                    .createQuery(query, params)
+            if (resultSet.next())
+                return resultSet.getString("email")
+            return null
+
+        } catch (e: Exception) {
+            throw SQLException("Cannot extract data: Cause: ${e.cause} ; Message: ${e.message}")
+        }
+    }
 
     fun getCompanyInvoiceSummary(): ArrayList<InvoiceSummary> {
         val list: ArrayList<InvoiceSummary> = arrayListOf()
@@ -77,12 +96,11 @@ class InvoicesDatabase {
         }
     }
 
-    fun insertCompanyInvoice(companyInvoice: CompanyInvoice, items: ObservableList<Item>): Boolean {
+    fun insertCompanyInvoice(companyInvoice: CompanyInvoice, items: ObservableList<Item>): String {
 
         val invoiceNo = generateInvoiceNo()
         val params = linkedMapOf(1 to invoiceNo, 2 to convertToDate(companyInvoice.dateOfIssue), 3 to companyInvoice.amount,
                 4 to companyInvoice.paymentMethod.toString(), 5 to companyInvoice.creator.id)
-        var rowsAffected = 0
         try {
             val isCompanyExisting = findCompanyByName(companyInvoice.company.companyName)
             if (isCompanyExisting != null)
@@ -92,23 +110,29 @@ class InvoicesDatabase {
                 val companyToInsert = findCompanyByName(companyInvoice.company.companyName)
                 params[6] = companyToInsert!!.id
             }
-            rowsAffected = DatabaseQueryUtils.createUpdateTypeQuery("INSERT INTO company_invoices(invoice_no, date_of_issue, amount, payment_option, prepared_by, company_id) VALUES(?,?,?,?,?,?)", params)
+            DatabaseQueryUtils.createUpdateTypeQuery("INSERT INTO company_invoices(invoice_no, date_of_issue, amount, payment_option, prepared_by, company_id) VALUES(?,?,?,?,?,?)", params)
 
             for (item in items) {
                 insertItem(item, invoiceNo, ReceiverType.COMPANY)
             }
-            insertPDFlink("Goodle.com", invoiceNo, ReceiverType.COMPANY)
-            if (rowsAffected > 0) return true
-            return false
+            saveLinkToCompanyInvoices(companyInvoice, invoiceNo, items)
+            return invoiceNo
         } catch (e: Exception) {
             throw SQLException("Cannot extract data: Cause: ${e.cause} ; Message: ${e.message}")
         }
     }
 
-    fun insertPersonalInvoice(personalInvoice: PersonalInvoice, items: ObservableList<Item>): Boolean {
+    private fun saveLinkToCompanyInvoices(companyInvoice: CompanyInvoice, invoiceNo: String, items: ObservableList<Item>) {
+        companyInvoice.invoiceNo = invoiceNo
+        val itemsList = items.stream().collect(Collectors.toList())
+        val path = PDFGenerator.generatePDFCompanyInvoice(companyInvoice, itemsList as java.util.ArrayList<Item>?)
+        val s3path = s3.upload(invoiceNo, path)
+        insertPDFlink(s3path, invoiceNo, receiver = ReceiverType.COMPANY)
+    }
+
+    fun insertPersonalInvoice(personalInvoice: PersonalInvoice, items: ObservableList<Item>): String {
         val invoiceNo = generateInvoiceNo()
         val params = linkedMapOf(1 to invoiceNo, 2 to convertToDate(personalInvoice.dateOfIssue), 3 to personalInvoice.amount, 4 to personalInvoice.paymentMethod.toString(), 5 to personalInvoice.discount)
-        var rowsAffected = 0
         try {
             val isCustomerExisting = findCustomerByEmail(personalInvoice.customer.email)
             if (isCustomerExisting != null) {
@@ -119,15 +143,23 @@ class InvoicesDatabase {
                 params[6] = insertedCustomer!!.id
             }
             params[7] = getLoggedUser().id
-            rowsAffected = DatabaseQueryUtils.createUpdateTypeQuery("INSERT INTO personal_invoices(invoice_no, date_of_issue, amount, payment_option, discount, customer_id, prepared_by) VALUES(?,?,?,?,?,?,?)", params)
+            DatabaseQueryUtils.createUpdateTypeQuery("INSERT INTO personal_invoices(invoice_no, date_of_issue, amount, payment_option, discount, customer_id, prepared_by) VALUES(?,?,?,?,?,?,?)", params)
             for (item in items) {
                 insertItem(item, invoiceNo, ReceiverType.PERSON)
             }
-            if (rowsAffected > 0) return true
-            return false
+            saveLinkToPersonalInvoices(personalInvoice, invoiceNo, items)
+            return invoiceNo
         } catch (e: Exception) {
             throw SQLException("Cannot extract data: Cause: ${e.cause} ; Message: ${e.message}")
         }
+    }
+
+    private fun saveLinkToPersonalInvoices(personalInvoice: PersonalInvoice, invoiceNo: String, items: ObservableList<Item>) {
+        personalInvoice.invoiceNo = invoiceNo
+        val itemsList = items.stream().collect(Collectors.toList())
+        val path = PDFGenerator.generatePDFPersonalInvoice(personalInvoice, itemsList as java.util.ArrayList<Item>?)
+        val s3path = s3.upload(invoiceNo, path)
+        insertPDFlink(s3path, invoiceNo, receiver = ReceiverType.PERSON)
     }
 
     fun insertCompany(company: Company): Boolean {
@@ -166,6 +198,19 @@ class InvoicesDatabase {
         try {
             val params = mapOf(1 to name)
             resultSet = DatabaseQueryUtils.createQuery("SELECT id, company_name, nip, address_id, owner_id FROM companies WHERE company_name= ?", params)
+            if (resultSet.next()) {
+                return getCompanyFromResultSet(resultSet)
+            }
+            return null
+        } catch (e: Exception) {
+            throw SQLException("Cannot extract data: Cause: ${e.cause} ; Message: ${e.message}")
+        }
+    }
+
+    fun findCompanyById(id: Long): Company? {
+        try {
+            val params = mapOf(1 to id)
+            resultSet = DatabaseQueryUtils.createQuery("SELECT id, company_name, nip, address_id, owner_id FROM companies WHERE id= ?", params)
             if (resultSet.next()) {
                 return getCompanyFromResultSet(resultSet)
             }
@@ -224,6 +269,17 @@ class InvoicesDatabase {
         try {
             val params = mapOf(1 to email)
             resultSet = DatabaseQueryUtils.createQuery("SELECT id, name, surname, email, phone_number, address_id FROM customers WHERE email= ?", params)
+            if (resultSet.next()) return getCustomerFromResultSet(resultSet)
+            return null
+        } catch (e: Exception) {
+            throw SQLException("Cannot extract data: Cause: ${e.cause} ; Message: ${e.message}")
+        }
+    }
+
+    fun findCustomerById(id: Long): Customer? {
+        try {
+            val params = mapOf(1 to id)
+            resultSet = DatabaseQueryUtils.createQuery("SELECT id, name, surname, email, phone_number, address_id FROM customers WHERE id= ?", params)
             if (resultSet.next()) return getCustomerFromResultSet(resultSet)
             return null
         } catch (e: Exception) {
@@ -327,83 +383,59 @@ class InvoicesDatabase {
             return false
         } catch (e: Exception) {
             throw SQLException("Cannot extract data: Cause: ${e.cause} ; Message: ${e.message}")
+
         }
     }
 
     fun findItemsByInvoiceNo(invoiceNo: String, receiver: ReceiverType): ArrayList<Item> {
         val items = ArrayList<Item>()
         val params = mapOf(1 to invoiceNo)
-        resultSet = if(receiver== ReceiverType.COMPANY) {
+        resultSet = if (receiver == ReceiverType.COMPANY) {
             DatabaseQueryUtils
-                    .createQuery("SELECT id, description, cost, quantity, vat, category, invoice_company_no AS invoice_no FROM items WHERE invoice_company_no= ?",params)
-        }
-        else DatabaseQueryUtils
-                .createQuery("SELECT id, description, cost, quantity, vat, category, invoice_personal_no AS invoice_no FROM items WHERE invoice_personal_no= ?",params)
-        if(resultSet.next()){
-            do{ items.add(getItemFroResultSet(resultSet))
-            }while(resultSet.next())
+                    .createQuery("SELECT id, description, cost, quantity, vat, category, invoice_company_no AS invoice_no FROM items WHERE invoice_company_no= ?", params)
+        } else DatabaseQueryUtils
+                .createQuery("SELECT id, description, cost, quantity, vat, category, invoice_personal_no AS invoice_no FROM items WHERE invoice_personal_no= ?", params)
+        if (resultSet.next()) {
+            do {
+                items.add(getItemFroResultSet(resultSet))
+            } while (resultSet.next())
         }
         return items
     }
 
-    private fun getOwnerFromResultSet(resultSet: ResultSet): Owner {
-        return Owner(resultSet.getLong("id"),
-                resultSet.getString("name"),
-                resultSet.getString("surname"),
-                resultSet.getString("email"),
-                resultSet.getLong("phone_number"),
-                resultSet.getInt("pid"))
+    fun findCompanyInvoiceByInvoiceNo(invoiceNo: String): CompanyInvoice? {
+        val params = mapOf(1 to invoiceNo)
+        try {
+            resultSet = DatabaseQueryUtils
+                    .createQuery("SELECT invoice_no, date_of_issue, amount, payment_option, prepared_by, company_id FROM company_invoices WHERE invoice_no= ?", params)
+            if (resultSet.next()) {
+                val companyInvoice = getCompanyInvoiceFromResultSet(resultSet)
+                companyInvoice.items = findItemsByInvoiceNo(companyInvoice.invoiceNo, ReceiverType.COMPANY)
+                return companyInvoice
+            }
+            return null
+        } catch (e: Exception) {
+            throw SQLException("Cannot extract data: Cause: ${e.cause} ; Message: ${e.message}")
+        }
     }
 
-    private fun getAddressFromResultSet(resultSet: ResultSet): AddressDetails {
-        return AddressDetails(resultSet.getLong("id"),
-                resultSet.getString("country"),
-                resultSet.getString("city"),
-                resultSet.getString("street"),
-                resultSet.getInt("building"))
-    }
-
-    private fun getCompanyFromResultSet(resultSet: ResultSet): Company {
-        return Company(resultSet.getLong("id"),
-                resultSet.getString("company_name"),
-                resultSet.getLong("nip"),
-                findAddressDetailsById(resultSet.getInt("address_id"))!!,
-                findOwnerById(resultSet.getInt("owner_id").toLong())!!)
-    }
-
-    private fun getCustomerFromResultSet(resultSet: ResultSet): Customer {
-        return Customer(resultSet.getLong("id"),
-                resultSet.getString("name"),
-                resultSet.getString("surname"),
-                resultSet.getString("email"),
-                resultSet.getLong("phone_number"),
-                findAddressDetailsById(resultSet.getInt("address_id"))!!)
-    }
-
-    private fun getItemFroResultSet(resultSet: ResultSet): Item {
-
-        return Item(resultSet.getLong("id"),
-                resultSet.getString("description"),
-                resultSet.getLong("cost"),
-                resultSet.getLong("quantity"),
-                resultSet.getInt("vat"),
-                ItemCategory.valueOf((resultSet.getString("category"))),
-                resultSet.getString("invoice_no"))
-    }
-
-    fun generateInvoiceNo(): String {
-        val prefix = "INV"
-        val date = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
-        return prefix + date.toString()
-    }
-
-    private fun getSummaryFromResultSet(resultSet: ResultSet): InvoiceSummary {
-        return InvoiceSummary(resultSet.getString("invoice_no"),
-                resultSet.getDate("date_of_issue").toLocalDate(),
-                resultSet.getInt("amount"),
-                resultSet.getString("receiver"),
-                resultSet.getString("pdf_link"))
+    fun findPersonalInvoiceByInvoiceNo(invoiceNo: String): PersonalInvoice? {
+        val params = mapOf(1 to invoiceNo)
+        try {
+            resultSet = DatabaseQueryUtils
+                    .createQuery("SELECT invoice_no, date_of_issue, amount, payment_option, discount, customer_id, prepared_by FROM personal_invoices WHERE invoice_no= ?", params)
+            if (resultSet.next()) {
+                val personalInvoice = getPersonalInvoiceFromResultSet(resultSet)
+                personalInvoice.items = findItemsByInvoiceNo(personalInvoice.invoiceNo, ReceiverType.PERSON)
+                return personalInvoice
+            }
+            return null
+        } catch (e: Exception) {
+            throw SQLException("Cannot extract data: Cause: ${e.cause} ; Message: ${e.message}")
+        }
     }
 }
+
+
 
 

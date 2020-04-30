@@ -28,7 +28,7 @@ class DatabaseQueryUtils {
                 if (parameters.isNotEmpty()) {
                     setParameters(preparedStatement, parameters as Map<Int, Any>)
                 }
-                return preparedStatement.executeUpdate()
+                 return preparedStatement.executeUpdate()
             } catch (e: Exception) {
                 throw SQLException("Cannot execute query: Cause: ${e.cause} ; Message: ${e.message}")
             }

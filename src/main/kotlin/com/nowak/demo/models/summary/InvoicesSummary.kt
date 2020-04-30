@@ -1,5 +1,6 @@
 package com.nowak.demo.models.summary
 
+import com.nowak.demo.models.items.ReceiverType
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleObjectProperty
 import javafx.beans.property.SimpleStringProperty
@@ -8,19 +9,11 @@ import tornadofx.*;
 
 class InvoiceSummary(invoiceNo: String, dateOfIssue: LocalDate, amount: Int, receiver: String, link: String?) {
     val invoiceNoProperty = SimpleStringProperty(invoiceNo)
-    var invoiceNo by invoiceNoProperty
-
     val dateOfIssueProperty = SimpleObjectProperty<LocalDate>(dateOfIssue)
-    var dateOfIssue by dateOfIssueProperty
-
     val amountProperty = SimpleIntegerProperty(amount)
-    var amount by amountProperty
-
     val receiverProperty = SimpleStringProperty(receiver)
-    var receiver by receiverProperty
-
     val linkProperty = SimpleStringProperty(link)
-    var link by linkProperty
+    val typeProperty = SimpleObjectProperty<ReceiverType>()
 }
 
 class InvoiceSummaryModel : ItemViewModel<InvoiceSummary>() {
@@ -28,5 +21,6 @@ class InvoiceSummaryModel : ItemViewModel<InvoiceSummary>() {
     val dateOfIssue = bind { item?.dateOfIssueProperty }
     val amount = bind { item?.amountProperty }
     val receiver = bind { item?.receiverProperty }
-    val link = bind{item?.linkProperty}
+    val link = bind { item?.linkProperty }
+    val type = bind { item?.typeProperty }
 }

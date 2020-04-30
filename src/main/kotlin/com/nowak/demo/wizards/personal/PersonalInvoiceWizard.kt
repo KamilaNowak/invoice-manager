@@ -7,7 +7,6 @@ const val SUBTITLE= "After filling all required field new invoice will be genera
 class PersonalInvoiceWizard : Wizard("Create new personal invoice", SUBTITLE) {
     override val canGoNext = currentPageComplete
     override val canFinish = allPagesComplete
-
     init {
         enableStepLinks = true
         showSteps = true

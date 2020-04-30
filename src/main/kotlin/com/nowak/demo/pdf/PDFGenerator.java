@@ -19,6 +19,7 @@ import com.nowak.demo.models.invoices.CompanyInvoice;
 import com.nowak.demo.models.invoices.PersonalInvoice;
 import com.nowak.demo.models.items.Item;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,8 +27,8 @@ import java.util.ArrayList;
 public class PDFGenerator {
 
     private static PdfFont FONT_BOLD;
-    private static String DEST_PREFIX = "./src/main/resources/";
-    private static String DEST_SUFFIX = ".pdf";
+    private static final String DEST_PREFIX = "./src/main/resources/";
+    private static final String DEST_SUFFIX = ".pdf";
 
     static {
         try {
@@ -37,58 +38,49 @@ public class PDFGenerator {
         }
     }
 
-    public static void generatePDFCompanyInvoice(CompanyInvoice invoice, ArrayList<Item> items) throws IOException {
+    public static String generatePDFCompanyInvoice(CompanyInvoice invoice, ArrayList<Item> items) throws IOException {
         final String dest = DEST_PREFIX + invoice.getInvoiceNo() + DEST_SUFFIX;
-        final String companyAddress =invoice.getCompany().getAddress().showAddress() + "\n";
-        final String companyOwner =invoice.getCompany().showOwner();
-        final String creatorInfo=invoice.getCreator().getUsername() + "\n " + invoice.getCreator().getEmail();
-        Document doc = generateDoc(dest);
+        final String companyAddress = invoice.getCompany().getAddress().showAddress() + "\n";
+        final String companyOwner = invoice.getCompany().showOwner();
+        final String creatorInfo = invoice.getCreator().getUsername() + "\n " + invoice.getCreator().getEmail();
+        Document document = generateDoc(dest);
 
-        addDocHeaders(invoice.getDateOfIssue().toString(), invoice.getInvoiceNo(), doc);
-
-        Paragraph from = new Paragraph("FROM: \n").setFont(FONT_BOLD);
-        from.add(creatorInfo);
-
-        Paragraph to = new Paragraph("TO: \n").setFont(FONT_BOLD);
-        to.add(companyAddress);
-        to.add(companyOwner);
+        addDocHeaders(invoice.getDateOfIssue().toString(), invoice.getInvoiceNo(), document);
+        addDocFromToParagraph(creatorInfo,companyAddress,companyOwner,document);
         Table table = showPersonalItems(items);
+        document.add(table);
 
-        doc.add(from);
-        doc.add(to);
-        doc.add(table);
-
-        addDocTotals(String.valueOf(invoice.getAmount()), doc);
-        doc.close();
+        addDocTotals(String.valueOf(invoice.getAmount()), document);
+        document.close();
+        return getFileAbsolutePath(DEST_PREFIX + invoice.getInvoiceNo() + DEST_SUFFIX);
     }
 
-    public static void generatePDFPersonalInvoice(PersonalInvoice invoice, ArrayList<Item> items) throws IOException {
+    public static String generatePDFPersonalInvoice(PersonalInvoice invoice, ArrayList<Item> items) throws IOException {
         final String dest = DEST_PREFIX + invoice.getInvoiceNo() + DEST_SUFFIX;
         final String customerAddress = "\n" + invoice.getCustomer().getAddress().showAddress() + "\n";
         final String customerInfo = invoice.getCustomer().showCustomer();
         final String creatorInfo = "\n " + invoice.getCreator().getUsername() + "\n " + invoice.getCreator().getEmail();
-        Document doc = generateDoc(dest);
+        final String discountInfo = "\n" + invoice.getDiscount() + " $";
+        Document document = generateDoc(dest);
 
-        addDocHeaders(invoice.getDateOfIssue().toString(), invoice.getInvoiceNo(), doc);
-        Paragraph from = new Paragraph("\nFROM:").setFont(FONT_BOLD);
-        from.add(creatorInfo);
+        addDocHeaders(invoice.getDateOfIssue().toString(), invoice.getInvoiceNo(), document);
+        addDocFromToParagraph(creatorInfo, customerAddress, customerInfo, document);
 
-        Paragraph to = new Paragraph("\nTO: ").setFont(FONT_BOLD);
-        to.add(customerAddress);
-        to.add(customerInfo);
         Table table = showPersonalItems(items);
-
-        doc.add(from);
-        doc.add(to);
-        doc.add(table);
-
+        document.add(table);
         Table discount = new Table(3);
         discount.addCell(getCell("\nTOTAL DISCOUNT ", TextAlignment.CENTER)).setFont(FONT_BOLD);
-        discount.addCell(getCell(("\n" + invoice.getDiscount() + " $"), TextAlignment.RIGHT).setFont(FONT_BOLD));
-        doc.add(discount);
+        discount.addCell(getCell((discountInfo), TextAlignment.RIGHT).setFont(FONT_BOLD));
+        document.add(discount);
 
-        addDocTotals(String.valueOf(invoice.getAmount()), doc);
-        doc.close();
+        addDocTotals(String.valueOf(invoice.getAmount()), document);
+        document.close();
+        return getFileAbsolutePath(DEST_PREFIX + invoice.getInvoiceNo() + DEST_SUFFIX);
+    }
+
+    private static String getFileAbsolutePath(String pathname) {
+        File savedFile = new File(pathname);
+        return savedFile.getAbsolutePath();
     }
 
     private static Table showPersonalItems(ArrayList<Item> items) {
@@ -124,8 +116,8 @@ public class PDFGenerator {
         return new Document(pdfDoc, PageSize.A4);
     }
 
-    private static void addDocHeaders(String d, String title, Document doc) {
-        Paragraph date = new Paragraph("Date of issue : " + d);
+    private static void addDocHeaders(String dateOfIssue, String title, Document doc) {
+        Paragraph date = new Paragraph("Date of issue : " + dateOfIssue);
         date.add(new Tab());
         date.addTabStops(new TabStop(1000, TabAlignment.RIGHT));
         doc.add(date);
@@ -140,6 +132,18 @@ public class PDFGenerator {
         totals.addCell(getCell("\nTOTAL AMOUNT ", TextAlignment.CENTER)).setFont(FONT_BOLD);
         totals.addCell(getCell(("\n" + amount + " $"), TextAlignment.RIGHT).setFont(FONT_BOLD));
         doc.add(totals);
+    }
+
+    private static void addDocFromToParagraph(String creatorInfo, String address, String receiver, Document document) {
+        Paragraph from = new Paragraph("FROM: \n").setFont(FONT_BOLD);
+        from.add(creatorInfo);
+
+        Paragraph to = new Paragraph("TO: \n").setFont(FONT_BOLD);
+        to.add(address);
+        to.add(receiver);
+
+        document.add(from);
+        document.add(to);
     }
 
     private static Cell getCell(String text, TextAlignment alignment) {

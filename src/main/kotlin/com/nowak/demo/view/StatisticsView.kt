@@ -25,7 +25,7 @@ class StatisticsView : View("Statistics") {
         vbox {
             id = "vbox-organized"
             textfield {
-                text = "You already prepared " +
+                text = "You have already prepared " +
                         showcaseController.getTotalPreparedInvoices().apply { id = "status-label" } + " invoices"
                 isDisable = true
             }
@@ -35,15 +35,12 @@ class StatisticsView : View("Statistics") {
                         data(it.value.toString(), it.key)
                     }
                 }
-                series("Personal") {
+                series("For independent customers"){
                     dataPersonal.forEach {
                         data(it.value.toString(), it.key)
-
                     }
                 }
             }
-
         }
-
     }
 }

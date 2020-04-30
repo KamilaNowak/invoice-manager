@@ -8,7 +8,7 @@ import tornadofx.*
 class InvoicerManagerApp: App(LoginView::class, Styles::class){
     override fun start(stage: Stage) {
         with(stage){
-            width=800.0
+            width=1050.0
             height=900.0
             isResizable=true
         }

@@ -23,6 +23,9 @@ class CustomerDetailsWizardView : View("Customer informations"){
     }
 
     override val root= vbox{
+        prefWidth=950.0
+        prefHeight=700.0
+
         label("Customer details")
         form {
             style { stylesheets.add("styles.css") }

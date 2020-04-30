@@ -12,25 +12,19 @@ class LoginView : View() {
     private var userModel = UserModel()
     private val loginController: LoginController by inject()
 
-    init {
-    }
-
-    override val root = borderpane {
+    override val root = vbox {
         this.id = "scene-bg"
         this.stylesheets.add("styles.css")
+        addClass(Styles.vbox)
 
-        top {
-            label(" Invoice Manager") {
-                alignment = Pos.TOP_CENTER
-                style { id = "logo-label" }
-            }
+        label(" Invoice Manager") {
+            alignment = Pos.TOP_CENTER
+            style { id = "logo-label" }
         }
-        center = form {
+        label("Login") { id = "info-label" }
+
+        form {
             addClass(Styles.heading)
-            label {
-                text = "Login"
-                alignment = Pos.CENTER
-            }
             fieldset() {
                 field("Username") {
                     textfield(userModel.username) {

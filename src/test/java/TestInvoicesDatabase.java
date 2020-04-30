@@ -1,15 +1,19 @@
+import com.nowak.demo.aws.S3Uploader;
 import com.nowak.demo.database.InvoicesDatabase;
 import com.nowak.demo.database.UserDatabase;
 import com.nowak.demo.models.addresses.AddressDetails;
 import com.nowak.demo.models.customers.Company;
+import com.nowak.demo.models.customers.Customer;
 import com.nowak.demo.models.customers.Owner;
 import com.nowak.demo.models.invoices.CompanyInvoice;
 import com.nowak.demo.models.invoices.PaymentMethod;
+import com.nowak.demo.models.invoices.PersonalInvoice;
 import com.nowak.demo.models.items.Item;
 import com.nowak.demo.models.items.ItemCategory;
 import com.nowak.demo.models.items.ReceiverType;
 import com.nowak.demo.models.login.User;
 import com.nowak.demo.pdf.PDFGenerator;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -23,6 +27,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+
+import static com.nowak.demo.database.ResultSetUtilsKt.generateInvoiceNo;
 
 @EnabledOnJre(JRE.JAVA_8)
 @DisplayName("Invoices database Controller tests")
@@ -157,48 +164,45 @@ public class TestInvoicesDatabase {
     @Test
     void testInsertCompanyInvoice() {
         Company company = new Company(0, "CarCompany", 1000222222, sampleAddress, sampleOwner);
-        User loggedUser = userDatabase.findUserById(1);
-        CompanyInvoice companyInvoice = new CompanyInvoice("INV2020419230912", LocalDate.now(), 1, PaymentMethod.PAYPAL, company, loggedUser);
+        User sampleUser = userDatabase.findUserById(1);
+        CompanyInvoice companyInvoice = new CompanyInvoice("INV2020419230912", LocalDate.now(), 1, PaymentMethod.PAYPAL, company, sampleUser);
         Item item = new Item(0, "Grey Wheels", 1223, 1, 18, ItemCategory.MATERIAL_ITEM, "");
-        boolean shouldReturnTrue = invoicesDatabase.insertCompanyInvoice(companyInvoice, (ObservableList<Item>) new ArrayList(Collections.singleton(item)));
+        String invoiceNo = invoicesDatabase.insertCompanyInvoice(companyInvoice, FXCollections.observableArrayList(item));
 
-        Assertions.assertTrue(shouldReturnTrue);
+        Assertions.assertNotNull(invoiceNo);
+
+        CompanyInvoice inserted = invoicesDatabase.findCompanyInvoiceByInvoiceNo(invoiceNo);
+        Assertions.assertNotNull(inserted);
+        Assertions.assertEquals(companyInvoice.getCompany().getCompanyName(), Objects.requireNonNull(inserted).getCompany().getCompanyName());
+        Assertions.assertEquals(company.getOwner().getEmail(), inserted.getCompany().getOwner().getEmail());
+        Assertions.assertEquals(company.getAddress().getStreet(), inserted.getCompany().getAddress().getStreet());
+        Assertions.assertEquals(company.getNip(), inserted.getCompany().getNip());
+        Assertions.assertEquals(companyInvoice.getAmount(), inserted.getAmount());
+        Assertions.assertEquals(companyInvoice.getDateOfIssue(), inserted.getDateOfIssue());
     }
 
     @Test
-    void testInsertItem() {
-        Company company = new Company(0, "CarCompany", 1000222222, sampleAddress, sampleOwner);
-        User loggedUser = userDatabase.findUserById(1);
-        CompanyInvoice companyInvoice = new CompanyInvoice("", LocalDate.now(), 1, PaymentMethod.PAYPAL, company, loggedUser);
+    void testInsertPersonalInvoice() {
+        User sampleUser = userDatabase.findUserById(1);
+        Customer customer = new Customer(0, "Mark", "Doe", "mdoe@email.com", 987654321, sampleAddress);
+        PersonalInvoice personalInvoice = new PersonalInvoice("", LocalDate.now(), 1000, PaymentMethod.PAYPAL, 0, customer, sampleUser);
         Item item = new Item(0, "Grey Wheels", 1223, 1, 18, ItemCategory.MATERIAL_ITEM, "");
-        boolean shouldReturnTrue = invoicesDatabase.insertCompanyInvoice(companyInvoice, (ObservableList<Item>) new ArrayList(Collections.singleton(item)));
+        String invoiceNo = invoicesDatabase.insertPersonalInvoice(personalInvoice, FXCollections.observableArrayList(item));
 
-        Assertions.assertTrue(shouldReturnTrue);
-    }
+        Assertions.assertNotNull(invoiceNo);
 
-    @Test
-    void testFindItemsByInvoiceNo() {
-        //TODO
-        System.out.println(invoicesDatabase.findItemsByInvoiceNo(" INV1588070475890", ReceiverType.COMPANY));
-    }
-
-    @Test
-    void testGetCompanyInvoiceSummary() {
-        //TODO
+        PersonalInvoice inserted = invoicesDatabase.findPersonalInvoiceByInvoiceNo(invoiceNo);
+        Assertions.assertNotNull(inserted);
+        Assertions.assertEquals(personalInvoice.getCustomer().getEmail(), inserted.getCustomer().getEmail());
+        Assertions.assertEquals(personalInvoice.getCustomer().getAddress().getStreet(), inserted.getCustomer().getAddress().getStreet());
+        Assertions.assertEquals(personalInvoice.getAmount(), inserted.getAmount());
+        Assertions.assertEquals(personalInvoice.getDiscount(), inserted.getDiscount());
+        Assertions.assertEquals(personalInvoice.getDateOfIssue(), inserted.getDateOfIssue());
     }
 
     @Test
     void testGenerateInvoiceNo() {
-        String inv = invoicesDatabase.generateInvoiceNo();
+        String inv = generateInvoiceNo();
         Assertions.assertNotNull(inv);
-    }
-
-    @Test
-    void pdf() throws IOException {
-        Company company = new Company(0, "CarCompany", 1000222222, sampleAddress, sampleOwner);
-        User loggedUser = userDatabase.findUserById(1);
-        CompanyInvoice companyInvoice = new CompanyInvoice("INV1588070475890", LocalDate.now(), 1, PaymentMethod.PAYPAL, company, loggedUser);
-        ArrayList<Item> items = invoicesDatabase.findItemsByInvoiceNo(" INV1588070475890", ReceiverType.COMPANY);
-        PDFGenerator.generatePDFCompanyInvoice(companyInvoice, items);
     }
 }

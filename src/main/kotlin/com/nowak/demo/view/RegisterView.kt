@@ -22,7 +22,7 @@ class RegisterView : View() {
 
         label(text = "Invoicer Manager") { id = "logo-label" }
         addClass(Styles.vbox)
-        label(text = "Register")
+        label("Register") { id="info-label" }
 
         form {
             fieldset(labelPosition = Orientation.HORIZONTAL) {

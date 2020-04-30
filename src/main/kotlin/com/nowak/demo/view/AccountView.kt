@@ -20,7 +20,8 @@ class AccountView : View() {
         this.stylesheets.add("styles.css")
         style {
             id = "second-scene-bg"
-            paddingAll = 15.0
+            paddingAll= 30.0
+            spacing=20.px
         }
         button {
             text = "Go back"

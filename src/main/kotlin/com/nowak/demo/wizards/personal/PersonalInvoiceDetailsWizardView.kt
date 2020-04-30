@@ -11,7 +11,7 @@ import com.nowak.demo.models.items.ItemModel
 import javafx.collections.FXCollections
 import tornadofx.*
 
-class PersonalInvoiceDetailsWizardView : View("My View") {
+class PersonalInvoiceDetailsWizardView : View("Invoice details") {
 
     private val personalInvoiceModel: PersonalInvoiceModel by inject()
     private val itemModel: ItemModel by inject()
@@ -25,34 +25,65 @@ class PersonalInvoiceDetailsWizardView : View("My View") {
     }
 
     override val root = vbox {
+        prefWidth=950.0
+        prefHeight=700.0
+
         style {
             stylesheets.add("styles.css")
         }
         label("Item details")
         form {
             fieldset {
-                field("description") {
+                field("Description") {
                     textfield(itemModel.description) {
                         style { id = "text-field" }
                         required()
+                        validator {
+                            when {
+                                it.isNullOrEmpty() || it.isNullOrBlank()
+                                -> error("Description cannot be empty")
+                                else -> null
+                            }
+                        }
                     }
                 }
                 field("Cost") {
                     textfield(itemModel.cost) {
                         style { id = "text-field" }
                         required()
+                        validator {
+                            when {
+                                it.isNullOrEmpty() || it.isNullOrBlank()
+                                -> error("Cost value cannot be empty")
+                                else -> null
+                            }
+                        }
                     }
                 }
                 field("Quantity") {
                     textfield(itemModel.quantity) {
                         style { id = "text-field" }
                         required()
+                        validator {
+                            when {
+                                it.isNullOrEmpty() || it.isNullOrBlank()
+                                -> error("Quantity value cannot be empty")
+                                else -> null
+                            }
+                        }
                     }
                 }
                 field("VAT") {
                     textfield(itemModel.vat) {
                         style { id = "text-field" }
                         required()
+                        validator {
+                            when {
+                                it.isNullOrEmpty() || it.isNullOrBlank()
+                                -> error("VAT value cannot be empty")
+                                else -> null
+                            }
+                        }
                     }
                 }
                 field("Category") {
@@ -64,9 +95,7 @@ class PersonalInvoiceDetailsWizardView : View("My View") {
                 }
                 button("Add Item") {
                     id = "dashboard-button"
-                    action {
-                        itemsList.add(ItemModel.convertItemModelToDto(itemModel))
-                    }
+                    action { itemsList.add(ItemModel.convertItemModelToDto(itemModel)) }
                 }
             }
         }
@@ -95,11 +124,26 @@ class PersonalInvoiceDetailsWizardView : View("My View") {
                     textfield(personalInvoiceModel.amount) {
                         style { id = "text-field" }
                         required()
+                        validator {
+                            when {
+                                it.isNullOrEmpty() || it.isNullOrBlank()
+                                -> error("Amount value cannot be empty")
+                                else -> null
+                            }
+                        }
                     }
                 }
                 field("Discount") {
                     textfield(personalInvoiceModel.discount) {
                         style { id = "text-field" }
+                        required()
+                        validator {
+                            when {
+                                it.isNullOrEmpty() || it.isNullOrBlank()
+                                -> error("Discount value cannot be empty")
+                                else -> null
+                            }
+                        }
                     }
                 }
                 field("PaymentMethod") {

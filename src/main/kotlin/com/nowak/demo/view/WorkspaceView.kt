@@ -28,7 +28,8 @@ class WorkspaceView : Workspace("Invoice Manager", NavigationMode.Tabs) {
                                 ViewTransition.Direction.LEFT))
             }
         }
-        dock<InvoicesView>()
         dock<StatisticsView>()
+        dock<InvoicesView>()
+
     }
 }

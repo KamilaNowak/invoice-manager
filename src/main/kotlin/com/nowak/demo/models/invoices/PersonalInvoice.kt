@@ -1,6 +1,7 @@
 package com.nowak.demo.models.invoices
 
 import com.nowak.demo.models.customers.Customer
+import com.nowak.demo.models.items.Item
 import com.nowak.demo.models.login.User
 import javafx.beans.property.SimpleIntegerProperty
 import javafx.beans.property.SimpleLongProperty
@@ -36,5 +37,7 @@ class PersonalInvoice(invoiceNo: String,
 
     val creatorProperty = SimpleObjectProperty<User>(creator)
     var creator by creatorProperty
+
+    var items = ArrayList<Item>()
 
 }

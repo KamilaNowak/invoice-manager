@@ -4,6 +4,7 @@ import com.nowak.demo.database.InvoicesDatabase
 import com.nowak.demo.models.invoices.CompanyInvoice
 import com.nowak.demo.models.invoices.PersonalInvoice
 import com.nowak.demo.models.items.Item
+import com.nowak.demo.models.items.ReceiverType
 import com.nowak.demo.wizards.company.CompanyInvoiceWizard
 import com.nowak.demo.wizards.personal.PersonalInvoiceWizard
 import javafx.collections.ObservableList
@@ -32,4 +33,8 @@ class InvoiceController : Controller() {
     fun addNewPersonalInvoice(personalInvoice: PersonalInvoice, items: ObservableList<Item>){
         invoicesDatabase.insertPersonalInvoice(personalInvoice, items)
     }
+    fun getEmail(invoiceNo:String, receiverType: ReceiverType):String{
+        return invoicesDatabase.getEmailByInvoiceNo(invoiceNo, receiverType)!!
+    }
+
 }

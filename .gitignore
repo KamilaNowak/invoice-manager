@@ -1,6 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
 target/
 .idea
+.pdf
 invoicer-manager.iml
 #files
 src/main/resources/app.properties

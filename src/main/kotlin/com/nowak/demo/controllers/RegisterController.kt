@@ -9,13 +9,10 @@ class RegisterController : Controller() {
 
     private val userDatabase = UserDatabase()
 
-
     fun register(username: String, password: String, email: String, birthDate: LocalDate): Boolean {
         return if (!userDatabase.checkUsernameEmailAvailability(username = username, email = email)) {
             userDatabase.insertNewUser(username, password, email, birthDate)
             true
-        } else {
-            false
-        }
+        } else false
     }
 }

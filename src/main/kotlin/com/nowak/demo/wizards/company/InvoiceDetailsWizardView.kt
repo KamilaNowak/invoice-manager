@@ -9,8 +9,10 @@ import com.nowak.demo.models.items.ItemCategory
 import com.nowak.demo.models.items.ItemModel
 import javafx.collections.FXCollections
 import tornadofx.*
+import tornadofx.Stylesheet.Companion.field
+import java.time.LocalDate
 
-class InvoiceDetailsWizardView : View("Invoice informations") {
+class InvoiceDetailsWizardView : View("Invoice details") {
 
     private val companyModel: CompanyModel by inject()
     private val companyInvoiceModel: CompanyInvoiceModel by inject()
@@ -24,6 +26,8 @@ class InvoiceDetailsWizardView : View("Invoice informations") {
     }
 
     override val root = vbox {
+        prefWidth=950.0
+        prefHeight=700.0
         style {
             stylesheets.add("styles.css")
         }
@@ -34,24 +38,52 @@ class InvoiceDetailsWizardView : View("Invoice informations") {
                     textfield(itemModel.description) {
                         style { id = "text-field" }
                         required()
+                        validator {
+                            when {
+                                it.isNullOrEmpty() || it.isNullOrBlank()
+                                -> error(" Description cannot be empty")
+                                else -> null
+                            }
+                        }
                     }
                 }
                 field("Cost") {
                     textfield(itemModel.cost) {
                         style { id = "text-field" }
                         required()
+                        validator {
+                            when {
+                                it.isNullOrEmpty() || it.isNullOrBlank()
+                                -> error("Cost value cannot be empty")
+                                else -> null
+                            }
+                        }
                     }
                 }
                 field("Quantity") {
                     textfield(itemModel.quantity) {
                         style { id = "text-field" }
                         required()
+                        validator {
+                            when {
+                                it.isNullOrEmpty() || it.isNullOrBlank()
+                                -> error("Quantity value cannot be empty")
+                                else -> null
+                            }
+                        }
                     }
                 }
                 field("VAT") {
                     textfield(itemModel.vat) {
                         style { id = "text-field" }
                         required()
+                        validator {
+                            when {
+                                it.isNullOrEmpty() || it.isNullOrBlank()
+                                -> error("VAT value annot be empty")
+                                else -> null
+                            }
+                        }
                     }
                 }
                 field("Category") {
@@ -63,9 +95,7 @@ class InvoiceDetailsWizardView : View("Invoice informations") {
                 }
                 button("Add Item") {
                     id = "dashboard-button"
-                    action {
-                        itemsList.add(ItemModel.convertItemModelToDto(itemModel))
-                    }
+                    action { itemsList.add(ItemModel.convertItemModelToDto(itemModel)) }
                 }
             }
         }
@@ -93,6 +123,13 @@ class InvoiceDetailsWizardView : View("Invoice informations") {
                     textfield(companyInvoiceModel.amount) {
                         style { id = "text-field" }
                         required()
+                        validator {
+                            when {
+                                it.isNullOrEmpty() || it.isNullOrBlank()
+                                -> error("Amount value cannot be empty")
+                                else -> null
+                            }
+                        }
                     }
                 }
                 field("PaymentMethod") {
@@ -104,7 +141,5 @@ class InvoiceDetailsWizardView : View("Invoice informations") {
                 }
             }
         }
-
     }
 }
-

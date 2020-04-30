@@ -15,11 +15,11 @@ class Styles : Stylesheet() {
             padding = box(15.px)
             fontSize = 40.px
             fontWeight = FontWeight.BOLD
-
         }
         vbox{
-            padding=box(12.px)
-            spacing=10.px
+            padding=box(15.px)
+            spacing=15.px
+            fontSize=18.px
         }
 
         form{

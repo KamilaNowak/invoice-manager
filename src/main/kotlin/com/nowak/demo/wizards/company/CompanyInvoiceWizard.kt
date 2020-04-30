@@ -17,6 +17,8 @@ class CompanyInvoiceWizard : Wizard("Create new company invoice", SUBTITLE ) {
 
         add(CompanyDetailsWizardView::class)
         add(InvoiceDetailsWizardView::class)
+
+
     }
 
 }

@@ -33,6 +33,6 @@ class CompanyInvoice(invoiceNo: String,
     val creatorProperty = SimpleObjectProperty<User>(creator)
     var creator by creatorProperty
 
-    val items = emptyList<Item>()
+    var items = ArrayList<Item>()
 
 }
