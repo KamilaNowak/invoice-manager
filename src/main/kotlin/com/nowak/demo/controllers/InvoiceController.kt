@@ -16,7 +16,7 @@ class InvoiceController : Controller() {
 
     fun openAddCompanyInvoiceWizard() {
         find<CompanyInvoiceWizard> {
-            onComplete { information("Invoice successfully generated") }
+            onComplete { information("Invoice successfully generated")}
             openModal()
         }
     }

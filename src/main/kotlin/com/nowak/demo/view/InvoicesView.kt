@@ -77,10 +77,10 @@ class InvoicesView : View("Invoices") {
             items = invoicesShowcaseController.getPersonalInvoiceSummary()
             columnResizePolicy = SmartResize.POLICY
 
-            column("Invoice number", InvoiceSummaryModel::invoiceNo)
-            column("Date", InvoiceSummaryModel::dateOfIssue)
-            column("Amount", InvoiceSummaryModel::amount)
-            column("Receiver", InvoiceSummaryModel::receiver)
+            column("Invoice number", InvoiceSummaryModel::invoiceNo).remainingWidth()
+            column("Date", InvoiceSummaryModel::dateOfIssue).remainingWidth()
+            column("Amount", InvoiceSummaryModel::amount).remainingWidth()
+            column("Receiver", InvoiceSummaryModel::receiver).remainingWidth()
             column("Document", InvoiceSummaryModel::link) {
                 cellFormat {
                     graphic = button("PDF") {

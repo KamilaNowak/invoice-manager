@@ -26,8 +26,9 @@ class DatabaseUtils {
             config.addDataSourceProperty("cachePrepStmts", true)
             config.addDataSourceProperty("prepStmtCacheSize",250)
             config.addDataSourceProperty("prepStmtCacheSqlLimit",2048)
-            config.isAutoCommit= true
+            config.isAutoCommit= false
             dataSource = HikariDataSource(config)
+
         }
 
         fun getConnection(): Connection {

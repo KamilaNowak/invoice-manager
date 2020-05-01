@@ -10,6 +10,7 @@ var loggedUser: Long = 0
 class WorkspaceView : Workspace("Invoice Manager", NavigationMode.Tabs) {
     init {
         stylesheets.add("styles.css")
+
         button("Account") {
             graphic = FontAwesomeIconView(FontAwesomeIcon.USER)
             style { id = "workspace-button" }
@@ -28,6 +29,7 @@ class WorkspaceView : Workspace("Invoice Manager", NavigationMode.Tabs) {
                                 ViewTransition.Direction.LEFT))
             }
         }
+
         dock<StatisticsView>()
         dock<InvoicesView>()
 

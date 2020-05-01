@@ -29,6 +29,8 @@ public class PDFGenerator {
     private static PdfFont FONT_BOLD;
     private static final String DEST_PREFIX = "./src/main/resources/";
     private static final String DEST_SUFFIX = ".pdf";
+    private static final String NL = "\n";
+    private static final String DNL = "\n\n";
 
     static {
         try {
@@ -40,13 +42,13 @@ public class PDFGenerator {
 
     public static String generatePDFCompanyInvoice(CompanyInvoice invoice, ArrayList<Item> items) throws IOException {
         final String dest = DEST_PREFIX + invoice.getInvoiceNo() + DEST_SUFFIX;
-        final String companyAddress = invoice.getCompany().getAddress().showAddress() + "\n";
+        final String companyAddress = invoice.getCompany().getAddress().showAddress() + NL;
         final String companyOwner = invoice.getCompany().showOwner();
-        final String creatorInfo = invoice.getCreator().getUsername() + "\n " + invoice.getCreator().getEmail();
+        final String creatorInfo = invoice.getCreator().getUsername() + NL + invoice.getCreator().getEmail();
         Document document = generateDoc(dest);
 
         addDocHeaders(invoice.getDateOfIssue().toString(), invoice.getInvoiceNo(), document);
-        addDocFromToParagraph(creatorInfo,companyAddress,companyOwner,document);
+        addDocFromToParagraph(creatorInfo, companyAddress, companyOwner, document);
         Table table = showPersonalItems(items);
         document.add(table);
 
@@ -57,10 +59,10 @@ public class PDFGenerator {
 
     public static String generatePDFPersonalInvoice(PersonalInvoice invoice, ArrayList<Item> items) throws IOException {
         final String dest = DEST_PREFIX + invoice.getInvoiceNo() + DEST_SUFFIX;
-        final String customerAddress = "\n" + invoice.getCustomer().getAddress().showAddress() + "\n";
+        final String customerAddress = NL + invoice.getCustomer().getAddress().showAddress() + NL;
         final String customerInfo = invoice.getCustomer().showCustomer();
-        final String creatorInfo = "\n " + invoice.getCreator().getUsername() + "\n " + invoice.getCreator().getEmail();
-        final String discountInfo = "\n" + invoice.getDiscount() + " $";
+        final String creatorInfo = NL + invoice.getCreator().getUsername() + NL + invoice.getCreator().getEmail();
+        final String discountInfo = NL + invoice.getDiscount() + " $";
         Document document = generateDoc(dest);
 
         addDocHeaders(invoice.getDateOfIssue().toString(), invoice.getInvoiceNo(), document);
@@ -69,7 +71,7 @@ public class PDFGenerator {
         Table table = showPersonalItems(items);
         document.add(table);
         Table discount = new Table(3);
-        discount.addCell(getCell("\nTOTAL DISCOUNT ", TextAlignment.CENTER)).setFont(FONT_BOLD);
+        discount.addCell(getCell(NL+"TOTAL DISCOUNT ", TextAlignment.CENTER)).setFont(FONT_BOLD);
         discount.addCell(getCell((discountInfo), TextAlignment.RIGHT).setFont(FONT_BOLD));
         document.add(discount);
 
@@ -129,8 +131,8 @@ public class PDFGenerator {
 
     private static void addDocTotals(String amount, Document doc) {
         Table totals = new Table(3);
-        totals.addCell(getCell("\nTOTAL AMOUNT ", TextAlignment.CENTER)).setFont(FONT_BOLD);
-        totals.addCell(getCell(("\n" + amount + " $"), TextAlignment.RIGHT).setFont(FONT_BOLD));
+        totals.addCell(getCell(NL+"TOTAL AMOUNT ", TextAlignment.CENTER)).setFont(FONT_BOLD);
+        totals.addCell(getCell((NL + amount + " $"), TextAlignment.RIGHT).setFont(FONT_BOLD));
         doc.add(totals);
     }
 
@@ -138,9 +140,9 @@ public class PDFGenerator {
         Paragraph from = new Paragraph("FROM: \n").setFont(FONT_BOLD);
         from.add(creatorInfo);
 
-        Paragraph to = new Paragraph("TO: \n").setFont(FONT_BOLD);
+        Paragraph to = new Paragraph("TO:"+NL).setFont(FONT_BOLD);
         to.add(address);
-        to.add(receiver);
+        to.add(receiver +DNL);
 
         document.add(from);
         document.add(to);

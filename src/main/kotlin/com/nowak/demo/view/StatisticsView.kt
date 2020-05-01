@@ -6,6 +6,8 @@ import com.nowak.demo.models.items.ReceiverType
 import javafx.scene.Parent
 import javafx.scene.chart.CategoryAxis
 import javafx.scene.chart.NumberAxis
+import javafx.scene.chart.PieChart
+import javafx.scene.paint.Color
 import tornadofx.*
 import java.time.LocalDate
 
@@ -39,6 +41,24 @@ class StatisticsView : View("Statistics") {
                     dataPersonal.forEach {
                         data(it.value.toString(), it.key)
                     }
+                }
+            }
+        }
+        hbox {
+            style{
+             id="#vbox-organized"
+            }
+            piechart {
+                title="Most popular categories"
+                for(item in showcaseController.getCountCategorySummary()){
+                    data.add(PieChart.Data(item.category.toString(), item.count.toDouble()))
+                }
+            }
+
+            piechart {
+                title="Most popular payment methods"
+                for(item in showcaseController.getCountPaymentOptionSummary()){
+                    data.add(PieChart.Data(item.payment.toString(), item.count.toDouble()))
                 }
             }
         }

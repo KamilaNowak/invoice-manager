@@ -1,8 +1,6 @@
 package com.nowak.demo.controllers
 
-import com.nowak.demo.database.CountDates
-import com.nowak.demo.database.InvoicesDatabase
-import com.nowak.demo.database.InvoicesShowcaseDatabase
+import com.nowak.demo.database.*
 import com.nowak.demo.models.items.ReceiverType
 import com.nowak.demo.models.summary.InvoiceSummaryModel
 import javafx.collections.ObservableList
@@ -21,6 +19,14 @@ class InvoicesShowcaseController : Controller() {
         return invoicesShowcaseDatabase.countTotalPreparedInvoices()
     }
 
+    fun getCountCategorySummary(): ArrayList<CountCategory> {
+        return invoicesShowcaseDatabase.getCountCategory()
+    }
+
+    fun getCountPaymentOptionSummary(): ArrayList<CountPayment> {
+        return invoicesShowcaseDatabase.getCountPayment()
+    }
+
     fun getCompanyInvoiceSummary(): ObservableList<InvoiceSummaryModel> {
         val list: ArrayList<InvoiceSummaryModel> = arrayListOf()
         val items = invoicesDatabase.getCompanyInvoiceSummary()
@@ -32,6 +38,7 @@ class InvoicesShowcaseController : Controller() {
         }
         return list.observable()
     }
+
     fun getPersonalInvoiceSummary(): ObservableList<InvoiceSummaryModel> {
         val list: ArrayList<InvoiceSummaryModel> = arrayListOf()
         val items2 = invoicesDatabase.getPersonalInvoiceSummary()
