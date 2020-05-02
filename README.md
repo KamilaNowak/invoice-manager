@@ -50,7 +50,7 @@ aws.region.name = AWS_REGION
 ![](https://github.com/KamilaNowak/invoice-manager/blob/master/snippets/snippet_dashboard.gif)
 
 ### Adding invoice
-![](https://github.com/KamilaNowak/invoice-manager/blob/master/snippets/snippet_add.gif)
+![](https://github.com/KamilaNowak/invoice-manager/blob/master/snippets/snipeet_add.gif)
 
 ### Viewing generated PDF files ans sending notification mail
 ![](https://github.com/KamilaNowak/invoice-manager/blob/master/snippets/snippet_pdf.gif)
