@@ -12,7 +12,7 @@ https://github.com/KamilaNowak/invoice-manager.git
 ```bash.
 ├── /src/         
 │     └── /main/    
-│           ├── /main/     
+│           ├── /kotlin/     
 │           └── /resources/   
 │                    └── app.properties  
 ```
